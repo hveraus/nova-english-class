@@ -1,0 +1,100 @@
+{
+  "lesson": 1,
+  "date": "2026-05-17",
+  "duration_min": 45,
+  "time_range": "00:00–45:01",
+  "teacher": "Ashley",
+  "student": "Nova",
+  "source_file": "英语课_20260517.md",
+  "version_note": "说话人标注版 v3",
+
+  "metrics": {
+    "repeat_latency": {
+      "mean": 0.8,
+      "max": 1,
+      "n": 11,
+      "samples": [
+        {"scene": "书名跟读 Clive and his friends", "ts": "00:42→00:43", "latency": 1},
+        {"scene": "stops 纠正后跟读", "ts": "01:20→01:21", "latency": 1},
+        {"scene": "walks 纠正后跟读", "ts": "02:04→02:05", "latency": 1},
+        {"scene": "helps 即时跟读", "ts": "02:35→02:35", "latency": 0},
+        {"scene": "smiles 纠正后跟读", "ts": "03:16→03:17", "latency": 1},
+        {"scene": "Long I: nine", "ts": "08:12→08:13", "latency": 1},
+        {"scene": "Long I: kite", "ts": "08:15→08:16", "latency": 1},
+        {"scene": "Long I: five", "ts": "08:18→08:19", "latency": 1},
+        {"scene": "Long I: dime", "ts": "08:21→08:22", "latency": 1},
+        {"scene": "Long O: nose", "ts": "27:49→27:49", "latency": 0},
+        {"scene": "Long O: rope", "ts": "27:51→27:52", "latency": 1}
+      ]
+    },
+    "writing_tasks": [
+      {"name": "bite 填缺失字母", "type": "fill-blank", "ts": "09:08→09:39", "seconds": 31, "rating": "mid"},
+      {"name": "has 整词书写", "type": "whole-word", "ts": "11:40→13:25", "seconds": 105, "rating": "slow", "note": "含51s自语'写不出来'"},
+      {"name": "play 拼写确认", "type": "whole-word", "ts": "13:25→13:48", "seconds": 23, "rating": "mid"}
+    ],
+    "attention_gaps": [
+      {"scene": "绘本页间停顿", "ts": "01:24→01:39", "seconds": 15, "type": "page-turn"},
+      {"scene": "Long I 圈词操作", "ts": "07:31→07:56", "seconds": 25, "type": "mouse-task"},
+      {"scene": "has 书写困难", "ts": "11:46→12:31", "seconds": 51, "type": "writing", "flag": "alert"},
+      {"scene": "形容词题2乱读", "ts": "42:04→42:37", "seconds": 33, "type": "comprehension", "flag": "alert"}
+    ],
+    "error_corrections": [
+      {"error": "walked→walks", "ts": "01:39→02:05", "seconds": 26, "prompt_type": "modeled"},
+      {"error": "smells→smiles", "ts": "03:02→03:17", "seconds": 15, "prompt_type": "direct"},
+      {"error": "take→bike", "ts": "06:34→06:41", "seconds": 7, "prompt_type": "hint"},
+      {"error": "Brooke→wise", "ts": "42:37→42:58", "seconds": 21, "prompt_type": "direct"},
+      {"error": "cold→noisy", "ts": "43:36→43:50", "seconds": 14, "prompt_type": "two-choice"}
+    ],
+    "gaps_30s_count": 2,
+    "errors_count": 5,
+    "oral_written_ratio": "1:6"
+  },
+
+  "skills": [
+    {"name": "长元音 Long I", "pct": 85},
+    {"name": "长元音 Long O", "pct": 90},
+    {"name": "绘本朗读", "pct": 80},
+    {"name": "视觉词拼写", "pct": 60},
+    {"name": "形容词辨别", "pct": 75},
+    {"name": "词汇量（农场/自然）", "pct": 78}
+  ],
+
+  "sentence_patterns": [
+    {"pattern": "Subject + V-s", "example": "Clive stops. He walks. She smiles.", "category": "动词变化"},
+    {"pattern": "can / cannot + V", "example": "A goat can run. A hen cannot swim.", "category": "情态动词"},
+    {"pattern": "first / second / third + ...", "example": "First, I see a dog. Second, ...", "category": "序数表达"}
+  ],
+
+  "modules": [
+    {"color": "#7F77DD", "name": "绘本《Clive and His Friends》", "sub": "句式重复 · 动词+s · 跟读朗读", "vocab": ["stops","walks","helps","smiles"]},
+    {"color": "#1a9068", "name": "拼读：长元音 Long I / Long O", "sub": "nine kite five · nose rope bone home", "vocab": ["nine","kite","five","dime","bike","nose","rope","bone","home","rose"]},
+    {"color": "#d4840a", "name": "视觉词 has · play · where · look", "sub": "拼写练习 · 句子理解", "vocab": ["has","play","where","look"]},
+    {"color": "#378ADD", "name": "句型 can/cannot · 农场动物词汇", "sub": "goat sheep cow horse pig rooster hen", "vocab": ["goat","sheep","cow","horse","pig","rooster","hen"]},
+    {"color": "#D85A30", "name": "写作顺序 · 语法：形容词", "sub": "first/second/third · describes a noun", "vocab": ["first","second","third","loud","noisy","wise"]}
+  ],
+
+  "performance": {
+    "dimensions": [
+      {"label": "跟读流利度", "score": 5, "note": "平均0.8s，11次≤1s"},
+      {"label": "参与专注度", "score": 4.5, "note": "仅书写段出现停滞"},
+      {"label": "纠错接受", "score": 4, "note": "提示后1–2s改正"},
+      {"label": "书写能力", "score": 1.5, "note": "has=105s，明显弱项"},
+      {"label": "语义理解", "score": 3.5, "note": "近义词辨别需提示"},
+      {"label": "朗读准确度", "score": 4, "note": "5次错误均提示后改正"}
+    ],
+    "highlights_good": [
+      "跟读反应极快，11次全部≤1s，语音模仿能力强",
+      "形容词第一题\"loud music\"独立答对，无需提示",
+      "农场动物圈选自行排除 monkey / octopus 干扰项"
+    ],
+    "highlights_warn": [
+      "has 书写耗时 105s，自语\"又写不出来了，手也写不出来\"",
+      "形容词第二题先答 cold，需老师二选一提示后改 noisy"
+    ],
+    "notes": ["转录末段约37:35起大量教师指令被误标为Nova，已排除"],
+    "teacher_feedback_pos": ["Good job", "Perfect", "You did it", "Very good"],
+    "teacher_feedback_neg": ["Try again"],
+    "teacher_feedback_neutral": ["Don't forget that S sound", "Let's spell it one more time"],
+    "summary": "Nova 本课整体表现活跃，听觉反应灵敏，跟读通道极为流畅。朗读错误在提示后均能快速改正，自我监控意识初步建立。主要短板是书写端——has 耗时 105s 为口语反应的 130 倍，书面词形记忆尚未稳固。整体判断：口语输入 > 书面输出。"
+  }
+}

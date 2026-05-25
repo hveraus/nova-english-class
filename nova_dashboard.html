@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova · 英语学习看板</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f2ee;--surface:#fff;--surface2:#eeece7;--border:#e0ddd5;--border2:#d0cdc4;
+  --text:#1a1916;--text2:#6b6860;--text3:#a09d97;
+  --green:#1a9068;--green-bg:#e8f5f0;--green-text:#0a5c42;
+  --amber:#d4840a;--amber-bg:#fdf0d8;--amber-text:#7a4a00;
+  --red:#c0392b;--red-bg:#fdecea;--red-text:#7a1e14;
+  --purple:#5b52c8;--purple-bg:#eeedfb;--purple-text:#332e8a;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh}
+nav{position:sticky;top:0;z-index:100;height:56px;background:rgba(244,242,238,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:0}
+.nav-brand{display:flex;align-items:center;gap:10px;margin-right:28px}
+.nav-av{width:32px;height:32px;border-radius:50%;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--purple)}
+.nav-name{font-size:14px;font-weight:600}.nav-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.nav-tabs{display:flex;gap:2px;flex:1}
+.nav-tab{padding:6px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;border:none;background:none;transition:all .15s}
+.nav-tab:hover{background:var(--surface2);color:var(--text)}
+.nav-tab.active{background:var(--text);color:var(--bg)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:4px}
+.ls-btn{width:30px;height:28px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ls-btn:hover{border-color:var(--text);color:var(--text)}
+.ls-btn.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.page{display:none;padding:24px;max-width:960px;margin:0 auto}.page.active{display:block}
+.stitle{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.mc{background:var(--surface2);border-radius:10px;padding:13px 14px}
+.mc-label{font-size:11px;color:var(--text2);margin-bottom:5px}
+.mc-val{font-size:22px;font-weight:500;line-height:1}
+.mc-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.25rem}
+.card.no-mb{margin-bottom:0}
+.sr{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--surface2)}
+.sr:last-child{border-bottom:none}
+.sn{font-size:13px;flex:1}
+.sbw{width:90px;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.sb{height:100%;border-radius:3px}
+.spct{font-size:11px;font-weight:600;font-family:var(--mono);width:28px;text-align:right}
+.hb{border-radius:0 8px 8px 0;padding:8px 12px;margin-bottom:5px;font-size:13px;line-height:1.55}
+.hb:last-child{margin-bottom:0}
+.hg{background:var(--green-bg);color:var(--green-text);border-left:2.5px solid var(--green)}
+.hw{background:var(--amber-bg);color:var(--amber-text);border-left:2.5px solid var(--amber)}
+.hn{background:var(--surface2);color:var(--text2);border-left:2.5px solid var(--border2);font-size:12px}
+.dim-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--surface2)}
+.dim-row:last-child{border-bottom:none}
+.dim-label{font-size:12px;width:80px;flex-shrink:0}
+.dim-blocks{display:flex;gap:3px}
+.db{width:12px;height:12px;border-radius:2px}
+.dim-note{font-size:11px;color:var(--text3);margin-left:auto;text-align:right;max-width:180px}
+.tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+.tag-g{background:var(--green-bg);color:var(--green-text)}
+.tag-a{background:var(--amber-bg);color:var(--amber-text)}
+.tag-p{background:var(--purple-bg);color:var(--purple-text)}
+.ml-list{display:flex;flex-direction:column;gap:4px}
+.mi{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;background:var(--surface2);border-radius:8px}
+.mi-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.mi-text{font-size:13px;line-height:1.4}
+.mi-sub{font-size:11px;color:var(--text3);display:block;margin-top:1px}
+.ts-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+.ts-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1rem 1.25rem}
+.ts-title{font-size:13px;font-weight:500;margin-bottom:10px}
+.ts-sub{font-size:11px;color:var(--text3);font-weight:400}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;padding:0 0 8px;text-align:left;border-bottom:1px solid var(--border)}
+td{font-size:13px;padding:6px 0;border-bottom:1px solid var(--surface2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.td-note{font-size:11px;color:var(--text3);display:block;margin-top:1px}
+.pill{display:inline-block;font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;font-family:var(--mono)}
+.pill-fast{background:var(--green-bg);color:var(--green-text)}
+.pill-mid{background:var(--amber-bg);color:var(--amber-text)}
+.pill-slow{background:var(--red-bg);color:var(--red-text)}
+.pill-ok{background:var(--purple-bg);color:var(--purple-text)}
+.tbar-wrap{display:flex;align-items:center;gap:6px}
+.tbar-bg{flex:1;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;min-width:40px}
+.tbar-fill{height:100%;border-radius:3px}
+.tbar-val{font-size:11px;font-weight:600;font-family:var(--mono);width:28px;text-align:right;flex-shrink:0}
+.info-box{margin-top:10px;padding:8px 10px;border-radius:8px;font-size:12px;line-height:1.6}
+.info-g{background:var(--green-bg);color:var(--green-text)}
+.info-a{background:var(--amber-bg);color:var(--amber-text)}
+.info-n{background:var(--surface2);color:var(--text2)}
+.lesson-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text2);margin-bottom:1.25rem}
+.summary-text{font-size:13px;line-height:1.75;background:var(--surface2);border-radius:10px;padding:14px}
+/* progress page */
+.trend-tbl{width:100%;border-collapse:collapse}
+.trend-tbl th{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;padding:0 10px 10px 0;text-align:left;border-bottom:1px solid var(--border)}
+.trend-tbl td{font-size:13px;padding:8px 10px 8px 0;border-bottom:1px solid var(--surface2);vertical-align:middle}
+.trend-tbl tr:last-child td{border-bottom:none}
+.t-up{color:var(--green);font-weight:600}.t-dn{color:var(--red);font-weight:600}.t-eq{color:var(--text3)}
+.t-note{font-size:11px;color:var(--text3)}
+.stb-row{padding:8px 0;border-bottom:1px solid var(--surface2)}
+.stb-row:last-child{border-bottom:none}
+.stb-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.stb-name{font-size:13px}
+.stb-vals{font-size:11px;font-family:var(--mono);color:var(--text3);display:flex;gap:8px}
+.stb-b{height:5px;border-radius:3px}
+.prog-dots{display:flex;gap:4px;margin:6px 0 4px}
+.pd{height:6px;border-radius:2px;flex:1}
+.foot{font-size:11px;color:var(--text3);padding:14px 24px;max-width:960px;margin:0 auto;border-top:1px solid var(--border)}
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.mod-card{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;background:var(--surface2);border-radius:8px;border-left:3px solid transparent}
+.mod-n{font-size:10px;font-weight:700;color:var(--text3);flex-shrink:0;padding-top:2px;min-width:14px}
+.mod-body{min-width:0}
+.mod-name{font-size:12px;font-weight:600;line-height:1.4}
+.mod-sub{font-size:11px;color:var(--text3);margin-top:2px;line-height:1.5}
+.mod-vocab{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}
+.vocab-chip{font-size:10px;font-family:var(--mono);font-weight:500;padding:1px 7px;border-radius:3px;background:rgba(0,0,0,.07);color:var(--text2);border:1px solid rgba(0,0,0,.06)}
+.vocab-chip.repeat{background:#d4edda;color:#1e6e34;border-color:#b8dfc5}
+.vocab-section-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.vocab-group{padding:12px 14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)}
+.vocab-group-title{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.vocab-group-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.vocab-group-words{display:flex;flex-wrap:wrap;gap:4px}
+.pattern-list{display:flex;flex-direction:column;gap:8px}
+.pattern-row{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:8px}
+.pattern-cat{font-size:10px;font-weight:600;padding:2px 7px;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.pattern-cat.动词变化{background:#e8f5e9;color:#2e7d32}
+.pattern-cat.情态动词{background:#e3f2fd;color:#1565c0}
+.pattern-cat.序数表达{background:#fce4ec;color:#880e4f}
+.pattern-cat.信息类句型{background:#f3e5f5;color:#6a1b9a}
+.pattern-cat.WH-疑问句{background:#fff8e1;color:#f57f17}
+.pattern-cat.描述句型{background:#e0f7fa;color:#006064}
+.pattern-cat.基本句型{background:#e8eaf6;color:#283593}
+.pattern-cat.主谓宾{background:#fbe9e7;color:#bf360c}
+.pattern-cat.代词替换{background:#e0f2f1;color:#004d40}
+.pattern-body{min-width:0}
+.pattern-text{font-size:12px;font-weight:600;font-family:var(--mono);color:var(--text)}
+.pattern-example{font-size:11px;color:var(--text3);margin-top:2px;line-height:1.5}
+.pattern-lesson-tag{font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;background:var(--surface2);color:var(--text3);border:1px solid var(--border);white-space:nowrap;flex-shrink:0;margin-top:2px}
+.err-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.err-bar-label{font-size:11px;color:var(--text2);width:80px;flex-shrink:0;text-align:right}
+.err-bar-track{flex:1;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden}
+.err-bar-fill{height:100%;border-radius:4px;background:var(--amber)}
+.err-bar-count{font-size:11px;color:var(--text3);width:24px;flex-shrink:0}
+.err-type-desc{font-size:10px;color:var(--text3);margin-top:1px}
+.capture-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .15s;flex-shrink:0;white-space:nowrap}
+.capture-btn:hover{border-color:var(--text);color:var(--text)}
+.capture-btn:disabled{opacity:.45;cursor:not-allowed}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-av">N</div>
+    <div><div class="nav-name">Nova</div><div class="nav-sub">英语课 · Ashley</div></div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('progress',this)">整体进展</button>
+    <button class="nav-tab" onclick="showPage('lessons',this)">课次记录</button>
+  </div>
+  <div class="nav-right" id="lesson-switcher" style="display:none"></div>
+</nav>
+
+<div class="page active" id="page-progress"></div>
+<div class="page" id="page-lessons"></div>
+<div class="foot" id="footer"></div>
+
+<!-- ══════════════════════════════════════
+     DATA — only this block needs updating
+     when adding a new lesson
+════════════════════════════════════════ -->
+<script id="all-lessons" type="application/json">
+[
+  {
+    "lesson": 1,
+    "date": "2026-05-17",
+    "duration_min": 45,
+    "time_range": "00:00–45:01",
+    "teacher": "Ashley",
+    "source_file": "英语课_20260517.md",
+    "metrics": {
+      "repeat_latency": {
+        "mean": 0.8,
+        "max": 1,
+        "n": 11,
+        "samples": [
+          {
+            "scene": "书名跟读 Clive and his friends",
+            "ts": "00:42→00:43",
+            "latency": 1
+          },
+          {
+            "scene": "stops 纠正后跟读",
+            "ts": "01:20→01:21",
+            "latency": 1
+          },
+          {
+            "scene": "walks 纠正后跟读",
+            "ts": "02:04→02:05",
+            "latency": 1
+          },
+          {
+            "scene": "helps 即时跟读",
+            "ts": "02:35→02:35",
+            "latency": 0
+          },
+          {
+            "scene": "smiles 纠正后跟读",
+            "ts": "03:16→03:17",
+            "latency": 1
+          },
+          {
+            "scene": "Long I: nine",
+            "ts": "08:12→08:13",
+            "latency": 1
+          },
+          {
+            "scene": "Long I: kite",
+            "ts": "08:15→08:16",
+            "latency": 1
+          },
+          {
+            "scene": "Long I: five",
+            "ts": "08:18→08:19",
+            "latency": 1
+          },
+          {
+            "scene": "Long I: dime",
+            "ts": "08:21→08:22",
+            "latency": 1
+          },
+          {
+            "scene": "Long O: nose",
+            "ts": "27:49→27:49",
+            "latency": 0
+          },
+          {
+            "scene": "Long O: rope",
+            "ts": "27:51→27:52",
+            "latency": 1
+          }
+        ]
+      },
+      "writing_tasks": [
+        {
+          "name": "bite 填缺失字母",
+          "type": "fill-blank",
+          "ts": "09:08→09:39",
+          "seconds": 31,
+          "rating": "mid"
+        },
+        {
+          "name": "has 整词书写",
+          "type": "whole-word",
+          "ts": "11:40→13:25",
+          "seconds": 105,
+          "rating": "slow",
+          "note": "含51s自语'写不出来'"
+        },
+        {
+          "name": "play 拼写确认",
+          "type": "whole-word",
+          "ts": "13:25→13:48",
+          "seconds": 23,
+          "rating": "mid"
+        }
+      ],
+      "attention_gaps": [
+        {
+          "scene": "绘本页间停顿",
+          "ts": "01:24→01:39",
+          "seconds": 15,
+          "type": "page-turn"
+        },
+        {
+          "scene": "Long I 圈词操作",
+          "ts": "07:31→07:56",
+          "seconds": 25,
+          "type": "mouse-task"
+        },
+        {
+          "scene": "has 书写困难",
+          "ts": "11:46→12:31",
+          "seconds": 51,
+          "type": "writing",
+          "flag": "alert"
+        },
+        {
+          "scene": "形容词题2乱读",
+          "ts": "42:04→42:37",
+          "seconds": 33,
+          "type": "comprehension",
+          "flag": "alert"
+        }
+      ],
+      "error_corrections": [
+        {
+          "error": "walked→walks",
+          "ts": "01:39→02:05",
+          "seconds": 26,
+          "prompt_type": "modeled"
+        },
+        {
+          "error": "smells→smiles",
+          "ts": "03:02→03:17",
+          "seconds": 15,
+          "prompt_type": "direct"
+        },
+        {
+          "error": "take→bike",
+          "ts": "06:34→06:41",
+          "seconds": 7,
+          "prompt_type": "hint"
+        },
+        {
+          "error": "Brooke→wise",
+          "ts": "42:37→42:58",
+          "seconds": 21,
+          "prompt_type": "direct"
+        },
+        {
+          "error": "cold→noisy",
+          "ts": "43:36→43:50",
+          "seconds": 14,
+          "prompt_type": "two-choice"
+        }
+      ],
+      "gaps_30s_count": 2,
+      "errors_count": 5,
+      "oral_written_ratio": "1:6"
+    },
+    "sentence_patterns": [
+      {
+        "pattern": "Subject + V-s",
+        "example": "Clive stops. He walks. She smiles.",
+        "category": "动词变化"
+      },
+      {
+        "pattern": "can / cannot + V",
+        "example": "A goat can run. A hen cannot swim.",
+        "category": "情态动词"
+      },
+      {
+        "pattern": "first / second / third + ...",
+        "example": "First, I see a dog. Second, ...",
+        "category": "序数表达"
+      }
+    ],
+    "stage_assessment": {},
+    "skills": [
+      {
+        "name": "长元音 Long I",
+        "pct": 85
+      },
+      {
+        "name": "长元音 Long O",
+        "pct": 90
+      },
+      {
+        "name": "绘本朗读",
+        "pct": 80
+      },
+      {
+        "name": "视觉词拼写",
+        "pct": 60
+      },
+      {
+        "name": "形容词辨别",
+        "pct": 75
+      },
+      {
+        "name": "词汇量（农场/自然）",
+        "pct": 78
+      }
+    ],
+    "modules": [
+      {
+        "color": "#7F77DD",
+        "name": "绘本《Clive and His Friends》",
+        "sub": "句式重复 · 动词+s · 跟读朗读",
+        "vocab": [
+          "stops",
+          "walks",
+          "helps",
+          "smiles"
+        ]
+      },
+      {
+        "color": "#1a9068",
+        "name": "拼读：长元音 Long I / Long O",
+        "sub": "nine kite five · nose rope bone home",
+        "vocab": [
+          "nine",
+          "kite",
+          "five",
+          "dime",
+          "bike",
+          "nose",
+          "rope",
+          "bone",
+          "home",
+          "rose"
+        ]
+      },
+      {
+        "color": "#d4840a",
+        "name": "视觉词 has · play · where · look",
+        "sub": "拼写练习 · 句子理解",
+        "vocab": [
+          "has",
+          "play",
+          "where",
+          "look"
+        ]
+      },
+      {
+        "color": "#378ADD",
+        "name": "句型 can/cannot · 农场动物词汇",
+        "sub": "goat sheep cow horse pig rooster hen",
+        "vocab": [
+          "goat",
+          "sheep",
+          "cow",
+          "horse",
+          "pig",
+          "rooster",
+          "hen"
+        ]
+      },
+      {
+        "color": "#D85A30",
+        "name": "写作顺序 · 语法：形容词",
+        "sub": "first/second/third · describes a noun",
+        "vocab": [
+          "first",
+          "second",
+          "third",
+          "loud",
+          "noisy",
+          "wise"
+        ]
+      }
+    ],
+    "performance": {
+      "dimensions": [
+        {
+          "label": "跟读流利度",
+          "score": 5.0,
+          "note": "平均0.8s，11次≤1s"
+        },
+        {
+          "label": "参与专注度",
+          "score": 4.5,
+          "note": "仅书写段出现停滞"
+        },
+        {
+          "label": "纠错接受",
+          "score": 4.0,
+          "note": "提示后1–2s改正"
+        },
+        {
+          "label": "书写能力",
+          "score": 1.5,
+          "note": "has=105s，明显弱项"
+        },
+        {
+          "label": "语义理解",
+          "score": 3.5,
+          "note": "近义词辨别需提示"
+        },
+        {
+          "label": "朗读准确度",
+          "score": 4.0,
+          "note": "5次错误均提示后改正"
+        }
+      ],
+      "highlights_good": [
+        "跟读反应极快，11次全部≤1s，语音模仿能力强",
+        "形容词第一题\"loud music\"独立答对，无需提示",
+        "农场动物圈选自行排除 monkey / octopus 干扰项"
+      ],
+      "highlights_warn": [
+        "has 书写耗时 105s，自语\"又写不出来了，手也写不出来\"",
+        "形容词第二题先答 cold，需老师二选一提示后改 noisy"
+      ],
+      "notes": [
+        "转录末段约37:35起大量教师指令被误标为Nova，已排除"
+      ],
+      "teacher_feedback_pos": [
+        "Good job",
+        "Perfect",
+        "You did it",
+        "Very good"
+      ],
+      "teacher_feedback_neg": [
+        "Try again"
+      ],
+      "teacher_feedback_neutral": [
+        "Don't forget that S sound",
+        "Let's spell it one more time"
+      ],
+      "summary": "Nova 本课整体表现活跃，听觉反应灵敏，跟读通道极为流畅。朗读错误在提示后均能快速改正，自我监控意识初步建立。主要短板是书写端——has 耗时 105s 为口语反应的 130 倍，书面词形记忆尚未稳固。整体判断：口语输入 > 书面输出。"
+    },
+    "version_note": "说话人标注版 v3"
+  },
+  {
+    "lesson": 2,
+    "date": "2026-05-19",
+    "duration_min": 25,
+    "time_range": "00:31–25:45",
+    "teacher": "Ashley",
+    "source_file": "远见街_m4a.md",
+    "metrics": {
+      "repeat_latency": {
+        "mean": 0.83,
+        "max": 2,
+        "n": 12,
+        "samples": [
+          {
+            "scene": "How are you / I'm happy",
+            "ts": "00:44→00:45",
+            "latency": 1
+          },
+          {
+            "scene": "Bread is from wheat",
+            "ts": "04:26→04:27",
+            "latency": 1
+          },
+          {
+            "scene": "Where is jam from?",
+            "ts": "05:24→05:25",
+            "latency": 1
+          },
+          {
+            "scene": "Jam is from fruit",
+            "ts": "05:31→05:32",
+            "latency": 1
+          },
+          {
+            "scene": "Milk is from a cow（第1次）",
+            "ts": "08:20→08:20",
+            "latency": 0
+          },
+          {
+            "scene": "Milk is from a cow（第2次）",
+            "ts": "09:13→09:14",
+            "latency": 1
+          },
+          {
+            "scene": "P-o-l-e 拼写跟读",
+            "ts": "18:52→18:52",
+            "latency": 0
+          },
+          {
+            "scene": "Cone 跟读",
+            "ts": "18:58→18:58",
+            "latency": 0
+          },
+          {
+            "scene": "R-o 跟读",
+            "ts": "19:11→19:12",
+            "latency": 1
+          },
+          {
+            "scene": "Look, it's big",
+            "ts": "22:28→22:29",
+            "latency": 1
+          },
+          {
+            "scene": "Where can it go?（纠正后）",
+            "ts": "22:40→22:41",
+            "latency": 1
+          },
+          {
+            "scene": "Made from grain",
+            "ts": "25:09→25:11",
+            "latency": 2
+          }
+        ]
+      },
+      "writing_tasks": [
+        {
+          "name": "pole 拼写跟读",
+          "type": "spelling-repeat",
+          "ts": "18:47→18:54",
+          "seconds": 7,
+          "rating": "fast"
+        },
+        {
+          "name": "butter 页面拼读",
+          "type": "read-page",
+          "ts": "10:45→11:06",
+          "seconds": 21,
+          "rating": "mid"
+        },
+        {
+          "name": "milk 反复练习",
+          "type": "repeat-drill",
+          "ts": "08:17→09:17",
+          "seconds": 60,
+          "rating": "mid"
+        },
+        {
+          "name": "Long O 口头识别",
+          "type": "oral-identification",
+          "ts": "16:44→17:49",
+          "seconds": 65,
+          "rating": "slow",
+          "note": "鼠标故障改为口头；coat误判为长O"
+        }
+      ],
+      "attention_gaps": [
+        {
+          "scene": "breakfast解释铺垫后",
+          "ts": "02:21→02:56",
+          "seconds": 35,
+          "type": "teacher-explanation",
+          "flag": "alert"
+        },
+        {
+          "scene": "milk页面理解困难",
+          "ts": "08:20→09:07",
+          "seconds": 47,
+          "type": "comprehension",
+          "flag": "alert"
+        },
+        {
+          "scene": "eggs页面停顿",
+          "ts": "12:38→13:09",
+          "seconds": 31,
+          "type": "comprehension",
+          "flag": "alert"
+        },
+        {
+          "scene": "Long O圈词任务启动",
+          "ts": "16:01→16:44",
+          "seconds": 43,
+          "type": "mouse-failure",
+          "flag": "alert",
+          "note": "鼠标故障所致"
+        },
+        {
+          "scene": "coat误判后引导",
+          "ts": "17:10→17:48",
+          "seconds": 38,
+          "type": "concept-confusion",
+          "flag": "alert"
+        },
+        {
+          "scene": "orange juice页面",
+          "ts": "11:35→11:59",
+          "seconds": 24,
+          "type": "read-page"
+        }
+      ],
+      "error_corrections": [
+        {
+          "error": "car→cow（第1次）",
+          "ts": "07:37→08:20",
+          "seconds": 43,
+          "prompt_type": "modeled",
+          "note": "朗读错误"
+        },
+        {
+          "error": "car→cow（第2次）",
+          "ts": "09:14→09:17",
+          "seconds": 3,
+          "prompt_type": "modeled-repeat"
+        },
+        {
+          "error": "coat（短O误判）",
+          "ts": "17:02→17:48",
+          "seconds": 46,
+          "prompt_type": "explanation",
+          "note": "概念混淆"
+        },
+        {
+          "error": "Where it can go→Where can it go",
+          "ts": "22:35→22:42",
+          "seconds": 7,
+          "prompt_type": "modeled",
+          "note": "语序错误"
+        }
+      ],
+      "gaps_30s_count": 5,
+      "errors_count": 4,
+      "oral_written_ratio": null,
+      "mouse_working": false
+    },
+    "sentence_patterns": [
+      {
+        "pattern": "Subject + is from + source",
+        "example": "Bread is from wheat. Milk is from a cow.",
+        "category": "信息类句型"
+      },
+      {
+        "pattern": "Where is X from?",
+        "example": "Where is jam from?",
+        "category": "WH-疑问句"
+      },
+      {
+        "pattern": "Where can + subject + V?",
+        "example": "Where can it go?",
+        "category": "WH-疑问句"
+      },
+      {
+        "pattern": "Look, it's + adj.",
+        "example": "Look, it's big. Look, it's little.",
+        "category": "描述句型"
+      }
+    ],
+    "stage_assessment": {},
+    "skills": [
+      {
+        "name": "Long O 识别",
+        "pct": 65
+      },
+      {
+        "name": "长/短元音辨别",
+        "pct": 55
+      },
+      {
+        "name": "绘本朗读",
+        "pct": 78
+      },
+      {
+        "name": "food source 词汇",
+        "pct": 82
+      },
+      {
+        "name": "视觉词 look/wear",
+        "pct": 75
+      },
+      {
+        "name": "WH- 问句句型",
+        "pct": 70
+      }
+    ],
+    "modules": [
+      {
+        "color": "#7F77DD",
+        "name": "信息类绘本《What's for Breakfast?》",
+        "sub": "breakfast/lunch/dinner · 食物来源 wheat/fruit/cow",
+        "vocab": [
+          "breakfast",
+          "wheat",
+          "butter",
+          "jam",
+          "milk",
+          "fruit"
+        ]
+      },
+      {
+        "color": "#1a9068",
+        "name": "拼读：长元音 Long O",
+        "sub": "bone rose mole hole rope · vs 短O cot moth",
+        "vocab": [
+          "bone",
+          "rose",
+          "mole",
+          "hole",
+          "rope",
+          "cone",
+          "pole",
+          "coat"
+        ]
+      },
+      {
+        "color": "#d4840a",
+        "name": "视觉词 look / wear",
+        "sub": "课后纸笔练习（鼠标故障）",
+        "vocab": [
+          "look",
+          "wear"
+        ]
+      },
+      {
+        "color": "#378ADD",
+        "name": "绘本《Look at This》",
+        "sub": "look 句型 · little/big/where can it go",
+        "vocab": [
+          "little",
+          "big"
+        ]
+      },
+      {
+        "color": "#D85A30",
+        "name": "Foods Made from Grain",
+        "sub": "bread muffin sandwich cereal · grain from wheat",
+        "vocab": [
+          "bread",
+          "muffin",
+          "sandwich",
+          "cereal",
+          "grain"
+        ]
+      }
+    ],
+    "performance": {
+      "dimensions": [
+        {
+          "label": "跟读流利度",
+          "score": 5.0,
+          "note": "平均0.83s，12次≤2s"
+        },
+        {
+          "label": "参与专注度",
+          "score": 3.5,
+          "note": "5次≥30s（含技术原因）"
+        },
+        {
+          "label": "纠错接受",
+          "score": 4.0,
+          "note": "二次示范后3s改正"
+        },
+        {
+          "label": "长短音辨别",
+          "score": 2.5,
+          "note": "coat误判为长O"
+        },
+        {
+          "label": "朗读准确度",
+          "score": 3.5,
+          "note": "4次错误均提示后改正"
+        },
+        {
+          "label": "词汇理解",
+          "score": 4.0,
+          "note": "grain/breakfast快速吸收"
+        }
+      ],
+      "highlights_good": [
+        "跟读12次平均0.83s，与第1课持平，口语通道依然稳健",
+        "grain/wheat/muffin等新词即时跟读，词汇吸收速度快",
+        "cow首次出错后，第二次遇到时3s内改正，短时记忆有效"
+      ],
+      "highlights_warn": [
+        "milk is from a \"car\" 出错两次，cow/car 发音混淆",
+        "coat（短O）误判为长O，Long vs Short 音感辨别是本课新暴露弱项",
+        "停滞次数增加至5次（第1课2次），部分为技术原因"
+      ],
+      "notes": [
+        "课后录音残留 25:45–34:51 已排除；Speaker 3/4 为转录误分"
+      ],
+      "teacher_feedback_pos": [
+        "Good job",
+        "Very good",
+        "Awesome",
+        "You got it"
+      ],
+      "teacher_feedback_neg": [
+        "One more time",
+        "Try again"
+      ],
+      "teacher_feedback_neutral": [
+        "Repeat after me",
+        "That one's short oh"
+      ],
+      "summary": "第2课口语跟读稳定性延续，延迟0.83s与第1课几乎持平。词汇习得速度值得肯定，新词跟读无明显滞后。主要挑战：Long O vs Short O 音感区分尚不稳固（coat误判），需对比练习；停滞次数增加，2次为鼠标技术原因，3次为理解困难，认知负荷偏高。"
+    },
+    "version_note": "课后录音残留（25:45–34:51）已排除；Speaker 3/4 为转录误分"
+  },
+  {
+    "lesson": 3,
+    "date": "2026-05-24",
+    "duration_min": 49,
+    "time_range": "01:44–50:57",
+    "teacher": "Ashley",
+    "source_file": "5月 24 日音乐课录音.md",
+    "metrics": {
+      "repeat_latency": {
+        "mean": 0.82,
+        "max": 4,
+        "n": 11,
+        "samples": [
+          {
+            "scene": "I did painting today 纠正跟读",
+            "ts": "02:07→02:07",
+            "latency": 0
+          },
+          {
+            "scene": "Long O 示范延迟跟读",
+            "ts": "04:39→04:43",
+            "latency": 4
+          },
+          {
+            "scene": "Long U says → You",
+            "ts": "08:32→08:32",
+            "latency": 0
+          },
+          {
+            "scene": "Cube 跟读",
+            "ts": "08:43→08:44",
+            "latency": 1
+          },
+          {
+            "scene": "Use 跟读",
+            "ts": "10:24→10:24",
+            "latency": 0
+          },
+          {
+            "scene": "Long U says U",
+            "ts": "10:45→10:46",
+            "latency": 1
+          },
+          {
+            "scene": "H 拼读（who）",
+            "ts": "11:37→11:38",
+            "latency": 1
+          },
+          {
+            "scene": "Good 跟读",
+            "ts": "11:49→11:50",
+            "latency": 1
+          },
+          {
+            "scene": "A Good Time for Luke 书名跟读",
+            "ts": "12:54→12:54",
+            "latency": 0
+          },
+          {
+            "scene": "He is funny 跟读",
+            "ts": "21:44→21:44",
+            "latency": 0
+          },
+          {
+            "scene": "We Want Honey 书名跟读",
+            "ts": "36:13→36:14",
+            "latency": 1
+          }
+        ]
+      },
+      "writing_tasks": [
+        {
+          "name": "it is a rose 句子书写",
+          "type": "write-sentence",
+          "ts": "05:31→06:40",
+          "seconds": 69,
+          "rating": "slow",
+          "note": "先在#1误写 hole，需老师反复重定向至正确题号"
+        },
+        {
+          "name": "I dig a hole 句子书写",
+          "type": "write-sentence",
+          "ts": "06:54→07:26",
+          "seconds": 32,
+          "rating": "mid",
+          "note": "忘记句末句号，Ashley 提醒后补加"
+        },
+        {
+          "name": "Long U 圈词（mouse）",
+          "type": "mouse-task",
+          "ts": "49:03→50:16",
+          "seconds": 73,
+          "rating": "slow",
+          "note": "需多次提示仍有遗漏，最终圈出 tube/mule/June/cube/flute"
+        }
+      ],
+      "attention_gaps": [
+        {
+          "scene": "\"it is a rose\" 书写中段停顿",
+          "ts": "06:14→06:25",
+          "seconds": 11,
+          "type": "writing"
+        },
+        {
+          "scene": "Long U 图片识别异常操作",
+          "ts": "09:26→10:21",
+          "seconds": 55,
+          "type": "mouse-failure",
+          "flag": "alert",
+          "note": "键盘/鼠标混乱，产生大量乱码输入（2 T Q Q...）"
+        },
+        {
+          "scene": "故事《A Good Time for Luke》起始迟疑",
+          "ts": "13:04→13:19",
+          "seconds": 15,
+          "type": "page-turn"
+        },
+        {
+          "scene": "绘本故事中段超长停顿",
+          "ts": "15:11→16:53",
+          "seconds": 102,
+          "type": "page-turn",
+          "flag": "alert"
+        },
+        {
+          "scene": "绘本故事末段停顿",
+          "ts": "18:39→19:22",
+          "seconds": 43,
+          "type": "reading",
+          "flag": "alert"
+        },
+        {
+          "scene": "代词章节页面导航",
+          "ts": "22:02→22:54",
+          "seconds": 52,
+          "type": "teacher-explanation",
+          "flag": "alert"
+        }
+      ],
+      "error_corrections": [
+        {
+          "error": "I did go painting → I did painting",
+          "ts": "01:57→02:09",
+          "seconds": 12,
+          "prompt_type": "modeled"
+        },
+        {
+          "error": "题号混淆：在#1写 hole 而非在#2写 rose",
+          "ts": "05:37→06:14",
+          "seconds": 37,
+          "prompt_type": "direct"
+        },
+        {
+          "error": "句末缺少句号（I dig a hole）",
+          "ts": "07:26→07:49",
+          "seconds": 23,
+          "prompt_type": "direct"
+        },
+        {
+          "error": "Kim and Ed 代词 → they（非 we）",
+          "ts": "34:10→34:16",
+          "seconds": 6,
+          "prompt_type": "explanation"
+        }
+      ],
+      "gaps_30s_count": 4,
+      "errors_count": 4,
+      "oral_written_ratio": "1:6"
+    },
+    "sentence_patterns": [
+      {
+        "pattern": "It is a + noun.",
+        "example": "It is a rose.",
+        "category": "基本句型"
+      },
+      {
+        "pattern": "I + V + noun.",
+        "example": "I dig a hole.",
+        "category": "主谓宾"
+      },
+      {
+        "pattern": "Noun → Pronoun",
+        "example": "Kim and Ed → they; Mike → he; rose → it",
+        "category": "代词替换"
+      }
+    ],
+    "stage_assessment": {
+      "mastered": [
+        {
+          "title": "口语跟读延迟",
+          "detail": "三课均维持 0.8s 级别，听觉复述通道极为稳健，是 Nova 最突出的优势"
+        },
+        {
+          "title": "纠错接受响应",
+          "detail": "提示后 1–3s 内改正，持续三课稳定，自我监控意识初步建立"
+        },
+        {
+          "title": "新词汇即时吸收",
+          "detail": "grain / wheat / cube / 代词等新词跟读无明显滞后，词汇习得速度快"
+        },
+        {
+          "title": "代词概念掌握",
+          "detail": "L3 新概念多次独立答对（we / he / it），语法灵活度初步建立"
+        }
+      ],
+      "needs_work": [
+        {
+          "title": "绘本解码能力",
+          "detail": "L3 故事朗读大量错词（\"look is fun\" / \"Dead can sit up\"），篇章层解码是当前最大短板"
+        },
+        {
+          "title": "长/短元音辨别",
+          "detail": "coat 误判为 Long O（L2）；Long O 掌握度 L3 退至 65%，规则感不稳固"
+        },
+        {
+          "title": "书面词形记忆",
+          "detail": "L1: has=105s；L3: 句子书写 69s 且混淆题号，口语与书写通道落差持续存在"
+        },
+        {
+          "title": "专注稳定性",
+          "detail": "L3 出现 102s 超长停顿（三课最长），≥30s 停滞从 L1 的 2 次升至 L3 的 4 次"
+        }
+      ],
+      "summary": "三课数据勾勒出 Nova 清晰的能力图谱：口语输入通道持续稳健（跟读延迟三课不变，维持 0.8s 级别），代词等新语法概念在第 3 课展示出快速吸收能力，值得肯定。主要挑战集中在输出端：绘本朗读出现大量错词（L3 最为突出），书写任务耗时偏长且伴随题号混淆，提示书面解码和书写记忆仍是核心薄弱点。注意力数据需持续关注——L3 出现了三课中最长的 102s 停顿，停滞次数也在逐课上升，建议后续观察是否与内容难度或课程时长相关，适时调整教学节奏。"
+    },
+    "skills": [
+      {
+        "name": "长元音 Long O",
+        "pct": 65
+      },
+      {
+        "name": "长元音 Long U",
+        "pct": 72
+      },
+      {
+        "name": "绘本朗读",
+        "pct": 52
+      },
+      {
+        "name": "视觉词拼写",
+        "pct": 70
+      },
+      {
+        "name": "代词 Pronouns",
+        "pct": 78
+      }
+    ],
+    "modules": [
+      {
+        "color": "#1a9068",
+        "name": "Long O 句子书写",
+        "sub": "it is a rose · I dig a hole · 完整句子练习",
+        "vocab": [
+          "rose",
+          "hole"
+        ]
+      },
+      {
+        "color": "#7F77DD",
+        "name": "Long U 拼读 + 词汇识别",
+        "sub": "cube ruler mule June flute tube · 圈词任务",
+        "vocab": [
+          "cube",
+          "ruler",
+          "mule",
+          "June",
+          "flute",
+          "tube",
+          "use",
+          "who"
+        ]
+      },
+      {
+        "color": "#378ADD",
+        "name": "绘本《A Good Time for Luke》",
+        "sub": "Long U 综合阅读 · 朗读解码练习",
+        "vocab": [
+          "tape",
+          "rip",
+          "luck",
+          "tin"
+        ]
+      },
+      {
+        "color": "#d4840a",
+        "name": "代词 Pronouns",
+        "sub": "he / she / they / we / it / I · 名词→代词替换练习",
+        "vocab": [
+          "he",
+          "she",
+          "they",
+          "we",
+          "it",
+          "I",
+          "you"
+        ]
+      },
+      {
+        "color": "#D85A30",
+        "name": "绘本《We Want Honey》",
+        "sub": "fantasy story · character / setting / plot · 综合阅读",
+        "vocab": [
+          "honey",
+          "surprise",
+          "plan",
+          "forest"
+        ]
+      }
+    ],
+    "performance": {
+      "dimensions": [
+        {
+          "label": "跟读流利度",
+          "score": 4.5,
+          "note": "平均0.82s，仅1次≥3s（Long O 4s）"
+        },
+        {
+          "label": "参与专注度",
+          "score": 2.5,
+          "note": "4次≥30s停滞，最长102s，三课最低"
+        },
+        {
+          "label": "纠错接受",
+          "score": 3.5,
+          "note": "1–37s范围，任务类错误需多次重定向"
+        },
+        {
+          "label": "书写能力",
+          "score": 2.0,
+          "note": "句子书写69s，题号理解混乱"
+        },
+        {
+          "label": "朗读准确度",
+          "score": 2.5,
+          "note": "故事朗读大量错词，解码能力薄弱"
+        },
+        {
+          "label": "语义理解",
+          "score": 3.5,
+          "note": "代词概念掌握良好，故事理解偏弱"
+        }
+      ],
+      "highlights_good": [
+        "跟读延迟10次中9次≤1s，口语模仿通道连续三课稳健（0.8s级别）",
+        "代词替换练习多次独立答对：Nag and I→we, Mike→he, Ed and I→we, rose→it",
+        "Long U 基础跟读（You / Use / U）无延迟，首次接触即语音感知准确"
+      ],
+      "highlights_warn": [
+        "故事朗读出现大量错词（\"look is fun\" / \"Set up the dots for dates\" / \"Dead can sit up\"），解码严重受阻",
+        "15:11–16:53 出现 102s 超长停顿，三课以来最长单次中断",
+        "句子书写任务混淆题号：先在#1写 hole，被反复重定向后才完成#2 rose"
+      ],
+      "notes": [
+        "32:16 起课末段部分 Ashley 话语误标为 Nova（Very good / Keep going 等），已排除分析"
+      ],
+      "teacher_feedback_pos": [
+        "Good job",
+        "Very good",
+        "Wonderful",
+        "You got it",
+        "That's right",
+        "You did a great job today"
+      ],
+      "teacher_feedback_neg": [
+        "Try again",
+        "Number two"
+      ],
+      "teacher_feedback_neutral": [
+        "Use your mouse and write",
+        "Can you write it on the lines?",
+        "Keep going",
+        "Read number X for me"
+      ],
+      "summary": "第3课聚焦Long U拼读与代词语法。口语跟读延迟0.82s与前两课持平，代词新概念掌握良好，多次独立正确代入。主要弱项：绘本朗读出现大量错误词，故事篇章解码明显偏弱；注意力停滞增至4次≥30s（最长102s），是三课以来最高；书写通道仍薄弱（句子级写作69s，且混淆题号）。"
+    },
+    "version_note": "Speaker 1 全程等同 Ashley；32:16 起部分 Ashley 话语误标为 Nova（Very good / Keep going / So we have...）已排除；07:48 背景出现 Melinda 为家庭背景声已忽略"
+  }
+]
+</script>
+
+<script>
+// ── helpers ──────────────────────────────────────
+const $ = id => document.getElementById(id);
+const el = (tag, cls, html='') => { const e=document.createElement(tag); if(cls)e.className=cls; if(html)e.innerHTML=html; return e; };
+function scoreBlocks(score){
+  const full=Math.floor(score), half=(score%1>=0.4&&score%1<0.9)?1:0, empty=5-full-half;
+  return Array(full).fill('<div class="db" style="background:var(--green)"></div>').join('')+
+    (half?'<div class="db" style="background:#9FE1CB"></div>':'')+
+    Array(empty).fill('<div class="db" style="background:var(--surface2);border:1px solid var(--border)"></div>').join('');
+}
+function ratingPill(r){
+  const m={fast:'pill-fast',mid:'pill-mid',slow:'pill-slow','alert':'pill-slow'};
+  const l={fast:'流畅',mid:'中等',slow:'困难','alert':'⚠'};
+  return `<span class="pill ${m[r]||'pill-ok'}">${l[r]||r}</span>`;
+}
+function barColor(s){return s>=75?'var(--green)':'var(--amber)';}
+function tbarColor(r){return r==='fast'?'var(--green)':r==='slow'?'var(--red)':'var(--amber)';}
+
+// ── LOAD DATA ────────────────────────────────────
+const lessons = JSON.parse($('all-lessons').textContent);
+const total = 10; // expected total lessons
+
+// ── LESSON PAGE ──────────────────────────────────
+function buildLessonPage(d) {
+  const m = d.metrics;
+  let html = `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem">
+    <div class="lesson-badge" style="margin-bottom:0"><strong>第 ${d.lesson} 课</strong> · ${d.date} · 约 ${d.duration_min} 分钟 · ${d.time_range} · 授课教师 ${d.teacher}</div>
+    <button class="capture-btn" onclick="captureCurrentPage(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg> 保存截图</button>
+  </div>
+  ${d.performance.summary ? `
+  <div class="card" style="margin-bottom:1.25rem;border-left:3px solid var(--green);background:var(--surface)">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span style="font-size:10px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.08em">本课总结</span>
+    </div>
+    <p style="font-size:13px;line-height:1.75;color:var(--text);margin:0">${d.performance.summary}</p>
+  </div>` : ''}
+  ${d.version_note?`<div class="hb hn" style="margin-bottom:1rem">${d.version_note}</div>`:''}
+
+  <div class="stitle">课程概览</div>
+  <div class="metrics">
+    <div class="mc"><div class="mc-label">课程时长</div><div class="mc-val">${d.duration_min}<span style="font-size:13px;font-weight:400">m</span></div><div class="mc-sub">${d.time_range}</div></div>
+    <div class="mc"><div class="mc-label">内容模块</div><div class="mc-val">${d.modules.length}</div><div class="mc-sub">已记录模块数</div></div>
+    <div class="mc"><div class="mc-label">跟读平均延迟</div><div class="mc-val" style="color:var(--green)">${m.repeat_latency.mean}<span style="font-size:13px;font-weight:400">s</span></div><div class="mc-sub">${m.repeat_latency.n}次采样</div></div>
+    <div class="mc"><div class="mc-label">${m.oral_written_ratio?'口语 vs 书写比':'≥30s 停滞次数'}</div>
+      <div class="mc-val" style="color:${m.oral_written_ratio?'var(--amber)':'var(--red)'}">${m.oral_written_ratio||m.gaps_30s_count}</div>
+      <div class="mc-sub">${m.oral_written_ratio?'书写耗时显著偏高':m.gaps_30s_count+'次'}</div></div>
+  </div>
+
+  <div class="stitle">本节课教学内容</div>
+  <div class="card">
+    <div class="mod-grid">
+      ${d.modules.map((mod,i)=>{
+        const words = mod.vocab||[];
+        const vocabHtml = words.length ? `<div class="mod-vocab">${words.map(w=>`<span class="vocab-chip">${w}</span>`).join('')}</div>` : '';
+        return `<div class="mod-card" style="border-left-color:${mod.color}"><span class="mod-n">${i+1}</span><div class="mod-body"><div class="mod-name">${mod.name}</div><div class="mod-sub">${mod.sub}</div>${vocabHtml}</div></div>`;
+      }).join('')}
+    </div>
+  </div>
+
+  ${(d.sentence_patterns||[]).length ? `
+  <div class="stitle">本节课句型</div>
+  <div class="card">
+    <div class="pattern-list">
+      ${(d.sentence_patterns||[]).map(p=>`
+        <div class="pattern-row">
+          <span class="pattern-cat ${p.category}">${p.category}</span>
+          <div class="pattern-body">
+            <div class="pattern-text">${p.pattern}</div>
+            <div class="pattern-example">${p.example}</div>
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>` : ''}
+
+  <div class="stitle">时间码量化分析</div>
+  <div class="ts-grid">
+    <div class="ts-card">
+      <div class="ts-title">跟读反应延迟 <span class="ts-sub">（老师结束 → Nova 开口）</span></div>
+      <table><tr><th>场景</th><th style="text-align:right">延迟</th></tr>
+      ${m.repeat_latency.samples.map(s=>`<tr><td>${s.scene}<span class="td-note">${s.ts}</span></td><td style="text-align:right"><span class="pill ${s.latency===0?'pill-fast':s.latency<=1?'pill-fast':s.latency<=2?'pill-mid':'pill-slow'}">${s.latency}s</span></td></tr>`).join('')}
+      </table>
+      <div class="info-box info-g">✓ ${m.repeat_latency.n}次采样，平均 <strong>${m.repeat_latency.mean}s</strong>，最长 ${m.repeat_latency.max}s</div>
+    </div>
+    <div class="ts-card">
+      <div class="ts-title">任务耗时 <span class="ts-sub">（指令 → 完成）</span></div>
+      <table><tr><th>任务</th><th>用时</th><th style="text-align:right">评级</th></tr>
+      ${(()=>{const maxS=Math.max(...m.writing_tasks.map(t=>t.seconds));return m.writing_tasks.map(t=>`<tr><td>${t.name}${t.note?'<span class="td-note">'+t.note+'</span>':''}<span class="td-note">${t.ts}</span></td><td><div class="tbar-wrap"><div class="tbar-bg"><div class="tbar-fill" style="width:${Math.round(t.seconds/maxS*100)}%;background:${tbarColor(t.rating)}"></div></div><span class="tbar-val" style="color:${tbarColor(t.rating)}">${t.seconds}s</span></div></td><td style="text-align:right">${ratingPill(t.rating)}</td></tr>`).join('')})()}
+      </table>
+    </div>
+  </div>
+  <div class="ts-grid">
+    <div class="ts-card">
+      <div class="ts-title">注意力 / 长时沉默</div>
+      <table><tr><th>时段</th><th>时长</th><th style="text-align:right">性质</th></tr>
+      ${m.attention_gaps.map(g=>`<tr><td>${g.scene}${g.note?'<span class="td-note">'+g.note+'</span>':''}<span class="td-note">${g.ts}</span></td><td style="color:${g.flag?'var(--red-text)':'var(--text2)'};${g.flag?'font-weight:600':''}">${g.seconds}s</td><td style="text-align:right"><span class="pill ${g.flag?'pill-slow':'pill-ok'}">${g.flag?'⚠':g.type}</span></td></tr>`).join('')}
+      </table>
+      <div class="info-box info-n">≥30s 停滞共 <strong>${m.gaps_30s_count}</strong> 次</div>
+    </div>
+    <div class="ts-card">
+      <div class="ts-title">错误 → 纠正耗时</div>
+      <table><tr><th>错误</th><th>耗时</th><th style="text-align:right">提示</th></tr>
+      ${(()=>{const maxE=Math.max(...m.error_corrections.map(e=>e.seconds));return m.error_corrections.map(e=>`<tr><td>${e.error}${e.note?'<span class="td-note">'+e.note+'</span>':''}<span class="td-note">${e.ts}</span></td><td><div class="tbar-wrap"><div class="tbar-bg"><div class="tbar-fill" style="width:${Math.round(e.seconds/maxE*100)}%;background:${e.seconds<=10?'var(--green)':e.seconds<=25?'var(--amber)':'var(--red)'}"></div></div><span class="tbar-val" style="color:${e.seconds<=10?'var(--green-text)':e.seconds<=25?'var(--amber-text)':'var(--red-text)'}">${e.seconds}s</span></div></td><td style="text-align:right"><span class="pill pill-mid">${e.prompt_type}</span></td></tr>`).join('')})()}
+      </table>
+    </div>
+  </div>
+
+  <div class="stitle">学生课堂表现</div>
+  <div class="card">
+    <div style="display:flex;gap:1.5rem">
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;margin-bottom:10px">各维度评分</div>
+        ${d.performance.dimensions.map(dim=>`<div class="dim-row"><span class="dim-label">${dim.label}</span><div class="dim-blocks">${scoreBlocks(dim.score)}</div><span class="dim-note">${dim.note}</span></div>`).join('')}
+        <div style="margin-top:10px;display:flex;gap:10px;font-size:11px;color:var(--text3)">
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:var(--green);display:inline-block"></span>优秀</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#9FE1CB;display:inline-block"></span>良好</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:var(--surface2);border:1px solid var(--border);display:inline-block"></span>待加强</span>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;margin-bottom:10px">典型课堂表现</div>
+        ${d.performance.highlights_good.map(h=>`<div class="hb hg">${h}</div>`).join('')}
+        ${d.performance.highlights_warn.map(h=>`<div class="hb hw">${h}</div>`).join('')}
+        ${(d.performance.notes||[]).map(h=>`<div class="hb hn">${h}</div>`).join('')}
+        <div class="tag-row">
+          ${d.performance.teacher_feedback_pos.map(t=>`<span class="tag tag-g">${t}</span>`).join('')}
+          ${d.performance.teacher_feedback_neg.map(t=>`<span class="tag tag-a">${t}</span>`).join('')}
+          ${d.performance.teacher_feedback_neutral.map(t=>`<span class="tag tag-p">${t}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--surface2)">
+      <div class="summary-text">${d.performance.summary}</div>
+    </div>
+  </div>
+
+  <div class="card no-mb">
+    <div class="stitle" style="margin-bottom:10px">技能掌握度</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0 24px">
+      ${d.skills.map(s=>`<div class="sr"><span class="sn">${s.name}</span><div class="sbw" style="width:120px"><div class="sb" style="width:${s.pct}%;background:${barColor(s.pct)}"></div></div><span class="spct" style="color:${s.pct>=75?'var(--green-text)':'var(--amber-text)'}">${s.pct}%</span></div>`).join('')}
+    </div>
+  </div>`;
+  return html;
+}
+
+// ── PROGRESS PAGE ─────────────────────────────────
+function buildProgressPage() {
+  const n = lessons.length;
+
+  // collect shared skill names across lessons (by position for simplicity)
+  // For trend: find skills that appear in both lessons by name similarity
+  const allSkillNames = [...new Set(lessons.flatMap(d=>d.skills.map(s=>s.name)))];
+
+  // trend rows for skill chart
+  const skillTrends = allSkillNames.map(name => {
+    const vals = lessons.map(d => { const s=d.skills.find(x=>x.name===name); return s?s.pct:null; });
+    return {name, vals};
+  }).filter(s=>s.vals.filter(v=>v!==null).length>1);
+
+  // ── Vocabulary accumulation ──────────────────────────────
+  const colorLabels = {
+    '#7F77DD': '绘本叙事',
+    '#1a9068': '拼读·元音',
+    '#d4840a': '视觉词·语法',
+    '#378ADD': '句型·绘本',
+    '#D85A30': '主题词汇'
+  };
+  const allWordsMap = {};   // word.lower → {lessonNums: Set, color}
+  const colorGroupsMap = {}; // color → {color, label, wordSet}
+  const colorOrder = ['#1a9068','#7F77DD','#d4840a','#378ADD','#D85A30'];
+  lessons.forEach(d => {
+    d.modules.forEach(mod => {
+      const c = mod.color;
+      if (!colorGroupsMap[c]) colorGroupsMap[c] = {color:c, label:colorLabels[c]||mod.name, words:new Set()};
+      (mod.vocab||[]).forEach(w => {
+        colorGroupsMap[c].words.add(w);
+        const key = w.toLowerCase();
+        if (!allWordsMap[key]) allWordsMap[key] = {lessonNums: new Set(), color: c};
+        allWordsMap[key].lessonNums.add(d.lesson);
+      });
+    });
+  });
+  const repeatWordSet = new Set(Object.entries(allWordsMap).filter(([,v])=>v.lessonNums.size>1).map(([w])=>w));
+  const totalWordCount = Object.keys(allWordsMap).length;
+  const repeatCount = repeatWordSet.size;
+  const vocabGroupsHtml = colorOrder
+    .filter(c => colorGroupsMap[c])
+    .map(c => {
+      const g = colorGroupsMap[c];
+      const wordArr = [...g.words];
+      const chips = wordArr.map(w=>`<span class="vocab-chip${repeatWordSet.has(w.toLowerCase())?' repeat':''}">${w}</span>`).join('');
+      return `<div class="vocab-group"><div class="vocab-group-title"><span class="vocab-group-dot" style="background:${g.color}"></span>${g.label}<span style="margin-left:4px;color:var(--text3);font-weight:400;font-size:10px">${wordArr.length}词</span></div><div class="vocab-group-words">${chips}</div></div>`;
+    }).join('');
+
+  // ── Sentence patterns ──────────────────────────────────
+  // Collect all patterns, tagged with lesson number; dedupe by pattern text
+  const patternCatColors = {
+    '动词变化':'#2e7d32','情态动词':'#1565c0','序数表达':'#880e4f',
+    '信息类句型':'#6a1b9a','WH-疑问句':'#f57f17','描述句型':'#006064',
+    '基本句型':'#283593','主谓宾':'#bf360c','代词替换':'#004d40'
+  };
+  // Group by category, collecting all lesson occurrences
+  const patternsByCat = {}; // category → [{pattern,example,lessonNums:[]}]
+  lessons.forEach(d => {
+    (d.sentence_patterns||[]).forEach(p => {
+      if (!patternsByCat[p.category]) patternsByCat[p.category] = [];
+      const existing = patternsByCat[p.category].find(x => x.pattern === p.pattern);
+      if (existing) { existing.lessonNums.push(d.lesson); }
+      else patternsByCat[p.category].push({...p, lessonNums:[d.lesson]});
+    });
+  });
+  const totalPatterns = Object.values(patternsByCat).reduce((s,a)=>s+a.length,0);
+  const patternsHtml = Object.entries(patternsByCat).map(([cat, pats])=>{
+    const color = patternCatColors[cat] || 'var(--text2)';
+    const bg = color.replace(/^#/,'');
+    const rows = pats.map(p => {
+      const tags = p.lessonNums.map(l=>`<span class="pattern-lesson-tag">L${l}</span>`).join('');
+      return `<div class="pattern-row" style="justify-content:space-between">
+        <div class="pattern-body" style="flex:1">
+          <div class="pattern-text">${p.pattern}</div>
+          <div class="pattern-example">${p.example}</div>
+        </div>
+        <div style="display:flex;gap:3px;margin-left:8px;align-self:flex-start;margin-top:2px">${tags}</div>
+      </div>`;
+    }).join('');
+    return `<div style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span style="width:8px;height:8px;border-radius:50%;background:${color};flex-shrink:0;display:inline-block"></span>
+        <span style="font-size:11px;font-weight:600;color:${color}">${cat}</span>
+        <span style="font-size:10px;color:var(--text3)">${pats.length}个句型</span>
+      </div>
+      <div class="pattern-list">${rows}</div>
+    </div>`;
+  }).join('');
+
+  // ── Error type analysis ────────────────────────────────
+  const promptLabels = {
+    'modeled':        '老师示范',
+    'modeled-repeat': '多次示范',
+    'direct':         '直接告知',
+    'hint':           '暗示提示',
+    'two-choice':     '二选一',
+    'explanation':    '概念解释'
+  };
+  const errTypeCounts = {};
+  const errTypeExamples = {};
+  lessons.forEach(d => {
+    (d.metrics.error_corrections||[]).forEach(e => {
+      const t = e.prompt_type;
+      errTypeCounts[t] = (errTypeCounts[t]||0) + 1;
+      if (!errTypeExamples[t]) errTypeExamples[t] = e.error;
+    });
+  });
+  const errTotal = Object.values(errTypeCounts).reduce((a,b)=>a+b,0);
+  const errSorted = Object.entries(errTypeCounts).sort((a,b)=>b[1]-a[1]);
+  const errBarsHtml = errSorted.map(([type, cnt])=>{
+    const pct = Math.round(cnt/errTotal*100);
+    const label = promptLabels[type]||type;
+    const ex = errTypeExamples[type]||'';
+    return `<div class="err-bar-row">
+      <div style="width:76px;flex-shrink:0;text-align:right">
+        <div style="font-size:11px;color:var(--text)">${label}</div>
+        <div class="err-type-desc">${cnt}次 · ${pct}%</div>
+      </div>
+      <div class="err-bar-track"><div class="err-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  let html = `
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem">
+    <div>
+      <h2 style="font-size:22px;font-weight:500;margin-bottom:4px">学习进展总览</h2>
+      <p style="font-size:13px;color:var(--text2)">基于第 1–${n} 课时间码量化数据 · 已记录 ${n} / ${total} 课次</p>
+    </div>
+    <button class="capture-btn" onclick="captureCurrentPage(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg> 保存截图</button>
+  </div>
+
+  <div class="stitle">课次记录进度</div>
+  <div class="card" style="padding:1rem 1.25rem .9rem">
+    <div class="prog-dots">
+      ${Array(total).fill(0).map((_,i)=>`<div class="pd" style="background:${i<n?'var(--green)':'var(--surface2)'}"></div>`).join('')}
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:5px">
+      ${lessons.map(d=>`第 ${d.lesson} 课 ${d.date}`).join(' · ')} · 后续课次上传后自动更新
+    </div>
+  </div>
+
+  <div class="stitle">核心指标对比</div>
+  <div class="metrics">
+    <div class="mc">
+      <div class="mc-label">跟读平均延迟</div>
+      <div class="mc-val" style="color:var(--green)">${lessons[n-1].metrics.repeat_latency.mean}<span style="font-size:13px;font-weight:400">s</span></div>
+      <div class="mc-sub">${lessons.map(d=>`L${d.lesson}: ${d.metrics.repeat_latency.mean}s`).join(' → ')}<br><span style="color:var(--green)">→ 持平稳定</span></div>
+    </div>
+    <div class="mc">
+      <div class="mc-label">≥30s 注意力停滞</div>
+      <div class="mc-val" style="color:var(--red)">${lessons[n-1].metrics.gaps_30s_count}</div>
+      <div class="mc-sub">${lessons.map(d=>`L${d.lesson}: ${d.metrics.gaps_30s_count}次`).join(' → ')}<br><span style="color:${lessons[n-1].metrics.gaps_30s_count>lessons[0].metrics.gaps_30s_count?'var(--red)':'var(--green)'}">
+        ${lessons[n-1].metrics.gaps_30s_count>lessons[0].metrics.gaps_30s_count?'↑ 增加':'↓ 减少或持平'}</span></div>
+    </div>
+    <div class="mc">
+      <div class="mc-label">朗读错误次数</div>
+      <div class="mc-val" style="color:var(--green)">${lessons[n-1].metrics.errors_count}</div>
+      <div class="mc-sub">${lessons.map(d=>`L${d.lesson}: ${d.metrics.errors_count}次`).join(' → ')}<br><span style="color:${lessons[n-1].metrics.errors_count<lessons[0].metrics.errors_count?'var(--green)':'var(--amber)'}">
+        ${lessons[n-1].metrics.errors_count<lessons[0].metrics.errors_count?'↓ 略减':'→ 持平'}</span></div>
+    </div>
+    <div class="mc">
+      <div class="mc-label">纠错接受速度</div>
+      <div class="mc-val" style="color:var(--text)">1–3<span style="font-size:13px;font-weight:400">s</span></div>
+      <div class="mc-sub">两课一致<br><span style="color:var(--text3)">→ 提示后快速改正</span></div>
+    </div>
+  </div>
+
+  <div class="stitle">跨课次详细对比</div>
+  <div class="card">
+    <table class="trend-tbl">
+      <tr>
+        <th style="width:160px">指标</th>
+        ${lessons.map(d=>`<th>第 ${d.lesson} 课<br><span class="t-note">${d.date} · ${d.duration_min}min</span></th>`).join('')}
+        <th>趋势</th><th>说明</th>
+      </tr>
+      <tr>
+        <td>跟读平均延迟</td>
+        ${lessons.map(d=>`<td>${d.metrics.repeat_latency.mean}s（n=${d.metrics.repeat_latency.n}）</td>`).join('')}
+        <td><span class="t-eq">→ 持平</span></td>
+        <td class="t-note">口语跟读通道稳健</td>
+      </tr>
+      <tr>
+        <td>≥30s 注意力停滞</td>
+        ${lessons.map(d=>`<td>${d.metrics.gaps_30s_count} 次</td>`).join('')}
+        <td><span class="t-dn">↑ 增加</span></td>
+        <td class="t-note">L2含技术原因（鼠标）</td>
+      </tr>
+      <tr>
+        <td>朗读错误次数</td>
+        ${lessons.map(d=>`<td>${d.metrics.errors_count} 次</td>`).join('')}
+        <td><span class="t-up">↓ 略减</span></td>
+        <td class="t-note">L2以语法/近音词错误为主</td>
+      </tr>
+      <tr>
+        <td>书写耗时（代表词）</td>
+        ${lessons.map(d=>{const w=d.metrics.writing_tasks.find(t=>t.rating==='slow')||d.metrics.writing_tasks[0];return `<td>${w.name}=${w.seconds}s</td>`;}).join('')}
+        <td><span class="t-up">↓ 显著</span></td>
+        <td class="t-note">L2改跟读模式，可比性有限</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="stitle">技能掌握度趋势</div>
+  <div class="card">
+    <div style="display:flex;gap:14px;margin-bottom:12px;font-size:11px;color:var(--text3)">
+      ${lessons.map((d,i)=>`<div style="display:flex;align-items:center;gap:5px"><div style="width:20px;height:5px;border-radius:3px;background:var(--green);opacity:${0.4+i*0.6}"></div>第${d.lesson}课</div>`).join('')}
+      <div style="display:flex;align-items:center;gap:5px"><div style="width:20px;height:5px;border-radius:3px;background:var(--amber)"></div>待加强</div>
+    </div>
+    ${skillTrends.map(s=>{
+      const last=s.vals.filter(v=>v!==null).slice(-1)[0];
+      return `<div class="stb-row">
+        <div class="stb-top"><span class="stb-name">${s.name}</span><span class="stb-vals">${s.vals.map((v,i)=>v!==null?`L${i+1}: ${v}%`:'').filter(Boolean).join(' ')}</span></div>
+        ${s.vals.map((v,i)=>v!==null?`<div class="stb-b" style="width:${v}%;background:${v>=75?'var(--green)':'var(--amber)'};opacity:${0.4+i*(0.6/Math.max(1,n-1))};margin-bottom:3px"></div>`:'').join('')}
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div class="stitle">词汇积累</div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:14px;flex-wrap:wrap">
+      <span style="font-size:13px;color:var(--text2)">已累积 <strong style="font-size:16px;color:var(--text);font-weight:600">${totalWordCount}</strong> 个单词</span>
+      <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text3)"><span class="vocab-chip repeat" style="pointer-events:none">word</span> 绿色 = 跨课复现（${repeatCount} 词）</span>
+    </div>
+    <div class="vocab-section-grid">${vocabGroupsHtml}</div>
+  </div>
+
+  <div class="stitle">句型积累</div>
+  <div class="card">
+    <div style="font-size:12px;color:var(--text3);margin-bottom:14px">共 <strong style="color:var(--text)">${totalPatterns}</strong> 个句型 · 标签显示首次出现课次 · 同一句型多课出现则展示全部</div>
+    ${patternsHtml}
+  </div>
+
+  <div class="stitle">纠错分析</div>
+  <div class="g2">
+    <div class="card no-mb">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">三课共 <strong style="color:var(--text)">${errTotal}</strong> 次纠错 · 按提示方式分类</div>
+      ${errBarsHtml}
+    </div>
+    <div class="card no-mb">
+      <div class="stitle" style="margin-bottom:8px;font-size:11px">提示方式说明</div>
+      <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+        <div><strong>老师示范</strong> — 老师说出正确答案，Nova 跟读（最常见）</div>
+        <div><strong>多次示范</strong> — 首次示范后仍出错，需再次示范</div>
+        <div><strong>直接告知</strong> — 直接给出正确词形，不作示范</div>
+        <div><strong>概念解释</strong> — 解释语法/音韵规则后纠正</div>
+        <div><strong>二选一</strong> — 给出两个选项让 Nova 选择正确答案</div>
+        <div><strong>暗示提示</strong> — 给出线索引导 Nova 自行找到答案</div>
+      </div>
+    </div>
+  </div>
+
+  ${(()=>{
+    const sa = lessons[n-1].stage_assessment || {};
+    const mastered = sa.mastered || [];
+    const needs = sa.needs_work || [];
+    const summary = sa.summary || '';
+    if (!mastered.length && !needs.length && !summary) return '';
+    return `
+  <div class="g2">
+    ${mastered.length ? `<div class="card no-mb">
+      <div class="stitle" style="margin-bottom:10px">已稳定掌握（跨${n}课）</div>
+      <div style="display:flex;flex-direction:column;gap:7px;font-size:13px">
+        ${mastered.map(i=>`<div style="display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">✓</span><div><strong>${i.title}</strong><br><span style="font-size:12px;color:var(--text2)">${i.detail}</span></div></div>`).join('')}
+      </div>
+    </div>` : ''}
+    ${needs.length ? `<div class="card no-mb">
+      <div class="stitle" style="margin-bottom:10px">持续待加强（跨${n}课）</div>
+      <div style="display:flex;flex-direction:column;gap:7px;font-size:13px">
+        ${needs.map(i=>`<div style="display:flex;gap:8px"><span style="color:var(--amber);flex-shrink:0">△</span><div><strong>${i.title}</strong><br><span style="font-size:12px;color:var(--text2)">${i.detail}</span></div></div>`).join('')}
+      </div>
+    </div>` : ''}
+  </div>
+
+  ${summary ? `<div class="stitle">阶段综合评估</div>
+  <div class="card"><div class="summary-text">${summary}</div></div>` : ''}`;
+  })()}`;
+  return html;
+}
+
+// ── RENDER ────────────────────────────────────────
+function renderAll() {
+  // progress page
+  $('page-progress').innerHTML = buildProgressPage();
+
+  // lesson switcher buttons
+  const sw = $('lesson-switcher');
+  sw.innerHTML = lessons.map(d=>`<button class="ls-btn${d.lesson===1?' active':''}" onclick="showLesson(${d.lesson},this)">L${d.lesson}</button>`).join('');
+
+  // lesson pages container
+  const lp = $('page-lessons');
+  lp.innerHTML = lessons.map((d,i)=>`<div id="lesson-${d.lesson}" class="lesson-slot" style="${i>0?'display:none':''}">${buildLessonPage(d)}</div>`).join('');
+
+  // footer
+  $('footer').textContent = `数据来源：${lessons.map(d=>d.source_file).join(' · ')} · 授课教师 Ashley · 学生 Nova · 时间码采样各课 n≥11`;
+}
+
+// ── NAV ───────────────────────────────────────────
+function showPage(p, btn) {
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(e=>e.classList.remove('active'));
+  $('page-'+p).classList.add('active');
+  if(btn) btn.classList.add('active');
+  $('lesson-switcher').style.display = p==='lessons'?'flex':'none';
+}
+
+function showLesson(n, btn) {
+  document.querySelectorAll('.lesson-slot').forEach(e=>e.style.display='none');
+  document.querySelectorAll('.ls-btn').forEach(e=>e.classList.remove('active'));
+  $('lesson-'+n).style.display='block';
+  if(btn) btn.classList.add('active');
+}
+
+// ── SCREENSHOT ────────────────────────────────────
+async function captureCurrentPage(btn) {
+  const page = document.querySelector('.page.active');
+  const btns = [...page.querySelectorAll('.capture-btn')];
+  const origHTML = btn.innerHTML;
+  btn.innerHTML = '生成中…';
+  btns.forEach(b => b.disabled = true);
+  await new Promise(r => setTimeout(r, 40));
+  btns.forEach(b => b.style.visibility = 'hidden');
+  try {
+    const canvas = await html2canvas(page, {
+      height: page.scrollHeight,
+      windowHeight: page.scrollHeight,
+      backgroundColor: '#f4f2ee',
+      useCORS: true,
+      allowTaint: true,
+      scale: Math.min(window.devicePixelRatio || 1, 2),
+      logging: false,
+    });
+    const label = (document.querySelector('.nav-tab.active')?.textContent.trim() || 'nova').replace(/\s+/g,'-');
+    const a = document.createElement('a');
+    a.download = `nova-${label}-${new Date().toISOString().slice(0,10)}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  } catch(e) {
+    alert('截图失败：' + e.message);
+  } finally {
+    btns.forEach(b => { b.style.visibility = ''; b.disabled = false; });
+    btn.innerHTML = origHTML;
+  }
+}
+
+renderAll();
+</script>
+</body>
+</html>

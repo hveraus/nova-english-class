@@ -1,0 +1,106 @@
+{
+  "lesson": 2,
+  "date": "2026-05-19",
+  "duration_min": 25,
+  "time_range": "00:31–25:45",
+  "teacher": "Ashley",
+  "student": "Nova",
+  "source_file": "远见街_m4a.md",
+  "version_note": "课后录音残留（25:45–34:51）已排除；Speaker 3/4 为转录误分",
+
+  "metrics": {
+    "repeat_latency": {
+      "mean": 0.83,
+      "max": 2,
+      "n": 12,
+      "samples": [
+        {"scene": "How are you / I'm happy", "ts": "00:44→00:45", "latency": 1},
+        {"scene": "Bread is from wheat", "ts": "04:26→04:27", "latency": 1},
+        {"scene": "Where is jam from?", "ts": "05:24→05:25", "latency": 1},
+        {"scene": "Jam is from fruit", "ts": "05:31→05:32", "latency": 1},
+        {"scene": "Milk is from a cow（第1次）", "ts": "08:20→08:20", "latency": 0},
+        {"scene": "Milk is from a cow（第2次）", "ts": "09:13→09:14", "latency": 1},
+        {"scene": "P-o-l-e 拼写跟读", "ts": "18:52→18:52", "latency": 0},
+        {"scene": "Cone 跟读", "ts": "18:58→18:58", "latency": 0},
+        {"scene": "R-o 跟读", "ts": "19:11→19:12", "latency": 1},
+        {"scene": "Look, it's big", "ts": "22:28→22:29", "latency": 1},
+        {"scene": "Where can it go?（纠正后）", "ts": "22:40→22:41", "latency": 1},
+        {"scene": "Made from grain", "ts": "25:09→25:11", "latency": 2}
+      ]
+    },
+    "writing_tasks": [
+      {"name": "pole 拼写跟读", "type": "spelling-repeat", "ts": "18:47→18:54", "seconds": 7, "rating": "fast"},
+      {"name": "butter 页面拼读", "type": "read-page", "ts": "10:45→11:06", "seconds": 21, "rating": "mid"},
+      {"name": "milk 反复练习", "type": "repeat-drill", "ts": "08:17→09:17", "seconds": 60, "rating": "mid"},
+      {"name": "Long O 口头识别", "type": "oral-identification", "ts": "16:44→17:49", "seconds": 65, "rating": "slow", "note": "鼠标故障改为口头；coat误判为长O"}
+    ],
+    "attention_gaps": [
+      {"scene": "breakfast解释铺垫后", "ts": "02:21→02:56", "seconds": 35, "type": "teacher-explanation", "flag": "alert"},
+      {"scene": "milk页面理解困难", "ts": "08:20→09:07", "seconds": 47, "type": "comprehension", "flag": "alert"},
+      {"scene": "eggs页面停顿", "ts": "12:38→13:09", "seconds": 31, "type": "comprehension", "flag": "alert"},
+      {"scene": "Long O圈词任务启动", "ts": "16:01→16:44", "seconds": 43, "type": "mouse-failure", "flag": "alert", "note": "鼠标故障所致"},
+      {"scene": "coat误判后引导", "ts": "17:10→17:48", "seconds": 38, "type": "concept-confusion", "flag": "alert"},
+      {"scene": "orange juice页面", "ts": "11:35→11:59", "seconds": 24, "type": "read-page"}
+    ],
+    "error_corrections": [
+      {"error": "car→cow（第1次）", "ts": "07:37→08:20", "seconds": 43, "prompt_type": "modeled", "note": "朗读错误"},
+      {"error": "car→cow（第2次）", "ts": "09:14→09:17", "seconds": 3, "prompt_type": "modeled-repeat"},
+      {"error": "coat（短O误判）", "ts": "17:02→17:48", "seconds": 46, "prompt_type": "explanation", "note": "概念混淆"},
+      {"error": "Where it can go→Where can it go", "ts": "22:35→22:42", "seconds": 7, "prompt_type": "modeled", "note": "语序错误"}
+    ],
+    "gaps_30s_count": 5,
+    "errors_count": 4,
+    "oral_written_ratio": null,
+    "mouse_working": false
+  },
+
+  "skills": [
+    {"name": "Long O 识别", "pct": 65},
+    {"name": "长/短元音辨别", "pct": 55},
+    {"name": "绘本朗读", "pct": 78},
+    {"name": "food source 词汇", "pct": 82},
+    {"name": "视觉词 look/wear", "pct": 75},
+    {"name": "WH- 问句句型", "pct": 70}
+  ],
+
+  "sentence_patterns": [
+    {"pattern": "Subject + is from + source", "example": "Bread is from wheat. Milk is from a cow.", "category": "信息类句型"},
+    {"pattern": "Where is X from?", "example": "Where is jam from?", "category": "WH-疑问句"},
+    {"pattern": "Where can + subject + V?", "example": "Where can it go?", "category": "WH-疑问句"},
+    {"pattern": "Look, it's + adj.", "example": "Look, it's big. Look, it's little.", "category": "描述句型"}
+  ],
+
+  "modules": [
+    {"color": "#7F77DD", "name": "信息类绘本《What's for Breakfast?》", "sub": "breakfast/lunch/dinner · 食物来源 wheat/fruit/cow", "vocab": ["breakfast","wheat","butter","jam","milk","fruit"]},
+    {"color": "#1a9068", "name": "拼读：长元音 Long O", "sub": "bone rose mole hole rope · vs 短O cot moth", "vocab": ["bone","rose","mole","hole","rope","cone","pole","coat"]},
+    {"color": "#d4840a", "name": "视觉词 look / wear", "sub": "课后纸笔练习（鼠标故障）", "vocab": ["look","wear"]},
+    {"color": "#378ADD", "name": "绘本《Look at This》", "sub": "look 句型 · little/big/where can it go", "vocab": ["little","big"]},
+    {"color": "#D85A30", "name": "Foods Made from Grain", "sub": "bread muffin sandwich cereal · grain from wheat", "vocab": ["bread","muffin","sandwich","cereal","grain"]}
+  ],
+
+  "performance": {
+    "dimensions": [
+      {"label": "跟读流利度", "score": 5, "note": "平均0.83s，12次≤2s"},
+      {"label": "参与专注度", "score": 3.5, "note": "5次≥30s（含技术原因）"},
+      {"label": "纠错接受", "score": 4, "note": "二次示范后3s改正"},
+      {"label": "长短音辨别", "score": 2.5, "note": "coat误判为长O"},
+      {"label": "朗读准确度", "score": 3.5, "note": "4次错误均提示后改正"},
+      {"label": "词汇理解", "score": 4, "note": "grain/breakfast快速吸收"}
+    ],
+    "highlights_good": [
+      "跟读12次平均0.83s，与第1课持平，口语通道依然稳健",
+      "grain/wheat/muffin等新词即时跟读，词汇吸收速度快",
+      "cow首次出错后，第二次遇到时3s内改正，短时记忆有效"
+    ],
+    "highlights_warn": [
+      "milk is from a \"car\" 出错两次，cow/car 发音混淆",
+      "coat（短O）误判为长O，Long vs Short 音感辨别是本课新暴露弱项",
+      "停滞次数增加至5次（第1课2次），部分为技术原因"
+    ],
+    "notes": ["课后录音残留 25:45–34:51 已排除；Speaker 3/4 为转录误分"],
+    "teacher_feedback_pos": ["Good job", "Very good", "Awesome", "You got it"],
+    "teacher_feedback_neg": ["One more time", "Try again"],
+    "teacher_feedback_neutral": ["Repeat after me", "That one's short oh"],
+    "summary": "第2课口语跟读稳定性延续，延迟0.83s与第1课几乎持平。词汇习得速度值得肯定，新词跟读无明显滞后。主要挑战：Long O vs Short O 音感区分尚不稳固（coat误判），需对比练习；停滞次数增加，2次为鼠标技术原因，3次为理解困难，认知负荷偏高。"
+  }
+}

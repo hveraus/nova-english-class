@@ -1,0 +1,116 @@
+{
+  "lesson": 3,
+  "date": "2026-05-24",
+  "duration_min": 49,
+  "time_range": "01:44–50:57",
+  "teacher": "Ashley",
+  "source_file": "5月 24 日音乐课录音.md",
+  "version_note": "Speaker 1 全程等同 Ashley；32:16 起部分 Ashley 话语误标为 Nova（Very good / Keep going / So we have...）已排除；07:48 背景出现 Melinda 为家庭背景声已忽略",
+
+  "metrics": {
+    "repeat_latency": {
+      "mean": 0.82,
+      "max": 4,
+      "n": 11,
+      "samples": [
+        {"scene": "I did painting today 纠正跟读", "ts": "02:07→02:07", "latency": 0},
+        {"scene": "Long O 示范延迟跟读", "ts": "04:39→04:43", "latency": 4},
+        {"scene": "Long U says → You", "ts": "08:32→08:32", "latency": 0},
+        {"scene": "Cube 跟读", "ts": "08:43→08:44", "latency": 1},
+        {"scene": "Use 跟读", "ts": "10:24→10:24", "latency": 0},
+        {"scene": "Long U says U", "ts": "10:45→10:46", "latency": 1},
+        {"scene": "H 拼读（who）", "ts": "11:37→11:38", "latency": 1},
+        {"scene": "Good 跟读", "ts": "11:49→11:50", "latency": 1},
+        {"scene": "A Good Time for Luke 书名跟读", "ts": "12:54→12:54", "latency": 0},
+        {"scene": "He is funny 跟读", "ts": "21:44→21:44", "latency": 0},
+        {"scene": "We Want Honey 书名跟读", "ts": "36:13→36:14", "latency": 1}
+      ]
+    },
+    "writing_tasks": [
+      {"name": "it is a rose 句子书写", "type": "write-sentence", "ts": "05:31→06:40", "seconds": 69, "rating": "slow", "note": "先在#1误写 hole，需老师反复重定向至正确题号"},
+      {"name": "I dig a hole 句子书写", "type": "write-sentence", "ts": "06:54→07:26", "seconds": 32, "rating": "mid", "note": "忘记句末句号，Ashley 提醒后补加"},
+      {"name": "Long U 圈词（mouse）", "type": "mouse-task", "ts": "49:03→50:16", "seconds": 73, "rating": "slow", "note": "需多次提示仍有遗漏，最终圈出 tube/mule/June/cube/flute"}
+    ],
+    "attention_gaps": [
+      {"scene": "\"it is a rose\" 书写中段停顿", "ts": "06:14→06:25", "seconds": 11, "type": "writing"},
+      {"scene": "Long U 图片识别异常操作", "ts": "09:26→10:21", "seconds": 55, "type": "mouse-failure", "flag": "alert", "note": "键盘/鼠标混乱，产生大量乱码输入（2 T Q Q...）"},
+      {"scene": "故事《A Good Time for Luke》起始迟疑", "ts": "13:04→13:19", "seconds": 15, "type": "page-turn"},
+      {"scene": "绘本故事中段超长停顿", "ts": "15:11→16:53", "seconds": 102, "type": "page-turn", "flag": "alert"},
+      {"scene": "绘本故事末段停顿", "ts": "18:39→19:22", "seconds": 43, "type": "reading", "flag": "alert"},
+      {"scene": "代词章节页面导航", "ts": "22:02→22:54", "seconds": 52, "type": "teacher-explanation", "flag": "alert"}
+    ],
+    "error_corrections": [
+      {"error": "I did go painting → I did painting", "ts": "01:57→02:09", "seconds": 12, "prompt_type": "modeled"},
+      {"error": "题号混淆：在#1写 hole 而非在#2写 rose", "ts": "05:37→06:14", "seconds": 37, "prompt_type": "direct"},
+      {"error": "句末缺少句号（I dig a hole）", "ts": "07:26→07:49", "seconds": 23, "prompt_type": "direct"},
+      {"error": "Kim and Ed 代词 → they（非 we）", "ts": "34:10→34:16", "seconds": 6, "prompt_type": "explanation"}
+    ],
+    "gaps_30s_count": 4,
+    "errors_count": 4,
+    "oral_written_ratio": "1:6"
+  },
+
+  "skills": [
+    {"name": "长元音 Long O", "pct": 65},
+    {"name": "长元音 Long U", "pct": 72},
+    {"name": "绘本朗读", "pct": 52},
+    {"name": "视觉词拼写", "pct": 70},
+    {"name": "代词 Pronouns", "pct": 78}
+  ],
+
+  "sentence_patterns": [
+    {"pattern": "It is a + noun.", "example": "It is a rose.", "category": "基本句型"},
+    {"pattern": "I + V + noun.", "example": "I dig a hole.", "category": "主谓宾"},
+    {"pattern": "Noun → Pronoun", "example": "Kim and Ed → they; Mike → he; rose → it", "category": "代词替换"}
+  ],
+
+  "modules": [
+    {"color": "#1a9068", "name": "Long O 句子书写", "sub": "it is a rose · I dig a hole · 完整句子练习", "vocab": ["rose","hole"]},
+    {"color": "#7F77DD", "name": "Long U 拼读 + 词汇识别", "sub": "cube ruler mule June flute tube · 圈词任务", "vocab": ["cube","ruler","mule","June","flute","tube","use","who"]},
+    {"color": "#378ADD", "name": "绘本《A Good Time for Luke》", "sub": "Long U 综合阅读 · 朗读解码练习", "vocab": ["tape","rip","luck","tin"]},
+    {"color": "#d4840a", "name": "代词 Pronouns", "sub": "he / she / they / we / it / I · 名词→代词替换练习", "vocab": ["he","she","they","we","it","I","you"]},
+    {"color": "#D85A30", "name": "绘本《We Want Honey》", "sub": "fantasy story · character / setting / plot · 综合阅读", "vocab": ["honey","surprise","plan","forest"]}
+  ],
+
+  "performance": {
+    "dimensions": [
+      {"label": "跟读流利度", "score": 4.5, "note": "平均0.82s，仅1次≥3s（Long O 4s）"},
+      {"label": "参与专注度", "score": 2.5, "note": "4次≥30s停滞，最长102s，三课最低"},
+      {"label": "纠错接受", "score": 3.5, "note": "1–37s范围，任务类错误需多次重定向"},
+      {"label": "书写能力", "score": 2, "note": "句子书写69s，题号理解混乱"},
+      {"label": "朗读准确度", "score": 2.5, "note": "故事朗读大量错词，解码能力薄弱"},
+      {"label": "语义理解", "score": 3.5, "note": "代词概念掌握良好，故事理解偏弱"}
+    ],
+    "highlights_good": [
+      "跟读延迟10次中9次≤1s，口语模仿通道连续三课稳健（0.8s级别）",
+      "代词替换练习多次独立答对：Nag and I→we, Mike→he, Ed and I→we, rose→it",
+      "Long U 基础跟读（You / Use / U）无延迟，首次接触即语音感知准确"
+    ],
+    "highlights_warn": [
+      "故事朗读出现大量错词（\"look is fun\" / \"Set up the dots for dates\" / \"Dead can sit up\"），解码严重受阻",
+      "15:11–16:53 出现 102s 超长停顿，三课以来最长单次中断",
+      "句子书写任务混淆题号：先在#1写 hole，被反复重定向后才完成#2 rose"
+    ],
+    "notes": ["32:16 起课末段部分 Ashley 话语误标为 Nova（Very good / Keep going 等），已排除分析"],
+    "teacher_feedback_pos": ["Good job", "Very good", "Wonderful", "You got it", "That's right", "You did a great job today"],
+    "teacher_feedback_neg": ["Try again", "Number two"],
+    "teacher_feedback_neutral": ["Use your mouse and write", "Can you write it on the lines?", "Keep going", "Read number X for me"],
+    "summary": "第3课聚焦Long U拼读与代词语法。口语跟读延迟0.82s与前两课持平，代词新概念掌握良好，多次独立正确代入。主要弱项：绘本朗读出现大量错误词，故事篇章解码明显偏弱；注意力停滞增至4次≥30s（最长102s），是三课以来最高；书写通道仍薄弱（句子级写作69s，且混淆题号）。"
+  },
+
+  "stage_assessment": {
+    "mastered": [
+      {"title": "口语跟读延迟", "detail": "三课均维持 0.8s 级别，听觉复述通道极为稳健，是 Nova 最突出的优势"},
+      {"title": "纠错接受响应", "detail": "提示后 1–3s 内改正，持续三课稳定，自我监控意识初步建立"},
+      {"title": "新词汇即时吸收", "detail": "grain / wheat / cube / 代词等新词跟读无明显滞后，词汇习得速度快"},
+      {"title": "代词概念掌握", "detail": "L3 新概念多次独立答对（we / he / it），语法灵活度初步建立"}
+    ],
+    "needs_work": [
+      {"title": "绘本解码能力", "detail": "L3 故事朗读大量错词（\"look is fun\" / \"Dead can sit up\"），篇章层解码是当前最大短板"},
+      {"title": "长/短元音辨别", "detail": "coat 误判为 Long O（L2）；Long O 掌握度 L3 退至 65%，规则感不稳固"},
+      {"title": "书面词形记忆", "detail": "L1: has=105s；L3: 句子书写 69s 且混淆题号，口语与书写通道落差持续存在"},
+      {"title": "专注稳定性", "detail": "L3 出现 102s 超长停顿（三课最长），≥30s 停滞从 L1 的 2 次升至 L3 的 4 次"}
+    ],
+    "summary": "三课数据勾勒出 Nova 清晰的能力图谱：口语输入通道持续稳健（跟读延迟三课不变，维持 0.8s 级别），代词等新语法概念在第 3 课展示出快速吸收能力，值得肯定。主要挑战集中在输出端：绘本朗读出现大量错词（L3 最为突出），书写任务耗时偏长且伴随题号混淆，提示书面解码和书写记忆仍是核心薄弱点。注意力数据需持续关注——L3 出现了三课中最长的 102s 停顿，停滞次数也在逐课上升，建议后续观察是否与内容难度或课程时长相关，适时调整教学节奏。"
+  }
+}
