@@ -1,0 +1,173 @@
+{
+  "lesson": 6,
+  "date": "2026-06-14",
+  "duration_min": 49,
+  "time_range": "00:00–48:32",
+  "teacher": "Ashley",
+  "source_file": "6 月 14 日英语课录音.docx",
+  "version_note": "Speaker 1 = Ashley（教师），Speaker 2 = Nova，Speaker 3 = 背景声/家长（04:06/12:49/14:53/18:11/27:24/29:14/36:01/40:01 等处出现）；课程从00:00直接进入 Short A 复习（无录音热身对话，可能热身在录音前完成）；本节为 Grade 1 Lesson 1 完整工作册课，含双篇绘本《Nat and Sam》+《We Like to Share》",
+
+  "metrics": {
+    "repeat_latency": {
+      "mean": 1.0,
+      "max": 2,
+      "n": 5,
+      "samples": [
+        {"scene": "Man 单词跟读（课程首词）", "ts": "00:13→00:14", "latency": 1},
+        {"scene": "Cat 单词跟读", "ts": "00:16→00:17", "latency": 1},
+        {"scene": "Tag 词表跟读（word box）", "ts": "22:52→22:52", "latency": 0},
+        {"scene": "Hat 词表跟读（word box）", "ts": "22:54→22:55", "latency": 1},
+        {"scene": "Rush 故事跟读（We Like to Share）", "ts": "46:04→46:06", "latency": 2}
+      ],
+      "note": "本课以书写任务为主，明确跟读段极少，仅5次可量化样本"
+    },
+    "writing_tasks": [
+      {"name": "填空词语（hat/tap/does/nap/bag）", "type": "fill-blank", "ts": "01:52→04:06", "seconds": 134, "rating": "mid", "note": "hat=22s（快），其余词各10–30s；\"the man has a dog\"写成\"bag\"需纠正"},
+      {"name": "拼写识别 + 押韵标注（X mark）", "type": "mouse-task", "ts": "04:20→11:21", "seconds": 421, "rating": "slow", "note": "多次需老师引导方向；押韵概念（nap/map、cat/c）理解后能独立标出"},
+      {"name": "Word box 句子填写（4句）", "type": "fill-blank", "ts": "22:06→26:09", "seconds": 243, "rating": "slow", "note": "句2约31s（老师提示\"You\"才完成），句4约46s，需提醒词间空格"},
+      {"name": "句子书写（大写首字母 + 句号，9句）", "type": "write-sentence", "ts": "27:56→38:53", "seconds": 657, "rating": "slow", "note": "每句50–90s，首字母大写和句末句号几乎每句遗漏；\"Dan can go to\"遗漏\"can\"需重写（80s）；\"This is my cat\"首字母大写耗时87s"},
+      {"name": "自编句子（I love my mom）", "type": "write-sentence", "ts": "41:28→43:33", "seconds": 125, "rating": "slow", "note": "独立完成内容构思，但耗时2min，Ashley提醒句末句号"}
+    ],
+    "attention_gaps": [
+      {"scene": "翻至下一拼写练习页", "ts": "03:36→04:06", "seconds": 30, "type": "page-turn", "flag": "alert"},
+      {"scene": "老师朗读故事《Nat and Sam》背景介绍", "ts": "12:04→12:34", "seconds": 30, "type": "teacher-explanation", "flag": "alert"},
+      {"scene": "老师解释完整句子概念（举例）", "ts": "19:16→19:47", "seconds": 31, "type": "teacher-explanation", "flag": "alert"},
+      {"scene": "Word box 句子2书写", "ts": "23:00→23:31", "seconds": 31, "type": "writing", "flag": "alert"},
+      {"scene": "Word box 句子5（fill-in-blank）书写", "ts": "26:29→27:04", "seconds": 35, "type": "writing", "flag": "alert"},
+      {"scene": "\"Dan can go to\" 重写（遗漏 can）", "ts": "29:12→29:52", "seconds": 40, "type": "writing", "flag": "alert"},
+      {"scene": "\"This is my cat\" 思考首字母大写", "ts": "30:12→30:44", "seconds": 32, "type": "writing", "flag": "alert"},
+      {"scene": "\"This is my cat\" 书写（capital T）", "ts": "30:55→31:28", "seconds": 33, "type": "writing", "flag": "alert"},
+      {"scene": "\"A cat cannot go\" 书写", "ts": "31:46→32:29", "seconds": 43, "type": "writing", "flag": "alert"},
+      {"scene": "\"You can go with me\" 书写", "ts": "32:38→33:25", "seconds": 47, "type": "writing", "flag": "alert"},
+      {"scene": "\"We can play\" + \"Sam can tag Dan\" 书写", "ts": "33:38→34:17", "seconds": 39, "type": "writing", "flag": "alert"},
+      {"scene": "\"He can tag me\" 书写（capital H）", "ts": "35:17→35:56", "seconds": 39, "type": "writing", "flag": "alert"},
+      {"scene": "\"We run and ran\" 书写（capital W）", "ts": "36:17→36:55", "seconds": 38, "type": "writing", "flag": "alert"},
+      {"scene": "\"The cat can hop\" 书写", "ts": "37:44→38:23", "seconds": 39, "type": "writing", "flag": "alert"},
+      {"scene": "\"cat can hop\" 拼写纠正（去掉 two，写 hop）", "ts": "38:23→38:53", "seconds": 30, "type": "writing", "flag": "alert"},
+      {"scene": "圈出完整句子练习（sentence ID）", "ts": "39:31→40:01", "seconds": 30, "type": "mouse-task", "flag": "alert"},
+      {"scene": "自编句子书写（I love my mom）", "ts": "41:28→43:33", "seconds": 125, "type": "writing", "flag": "alert"}
+    ],
+    "error_corrections": [
+      {"error": "词表独立朗读：\"tap\" 多次错读，Ashley 提示后 Nova 仍答 \"Does\"", "ts": "01:09→01:22", "seconds": 13, "prompt_type": "direct", "note": "Ashley 给出答案 tap，Nova 未能成功复述，老师移至下一环节"},
+      {"error": "\"We run\" → \"we ran\"（句子辨别阅读）", "ts": "19:58→20:02", "seconds": 4, "prompt_type": "direct"},
+      {"error": "\"Can go too\" → \"Dan can go to\"（遗漏 Dan 和 can）", "ts": "28:32→29:52", "seconds": 80, "prompt_type": "direct", "note": "Ashley 分三次提示：补 Dan、加 capital D、加 can；最终 29:52 完成"},
+      {"error": "\"this is my cat\" 首字母小写 t → 大写 T", "ts": "30:01→31:28", "seconds": 87, "prompt_type": "direct", "note": "Ashley 提示\"Capital tea, big tea, not small tea\"后完成"},
+      {"error": "\"cat can hop\" 含多余词，hop 拼写不确定", "ts": "37:39→38:53", "seconds": 74, "prompt_type": "hint", "note": "Ashley 提示去掉\"two\"并拼出 H-O-P"},
+      {"error": "\"Dece does\" → \"Rosa Rosa does\"（故事 We Like to Share）", "ts": "45:46→45:58", "seconds": 12, "prompt_type": "modeled"}
+    ],
+    "gaps_30s_count": 17,
+    "errors_count": 9,
+    "oral_written_ratio": "1:2"
+  },
+
+  "skills": [
+    {"name": "短元音 Short A", "pct": 72},
+    {"name": "视觉词拼写", "pct": 62},
+    {"name": "绘本朗读", "pct": 48},
+    {"name": "can/cannot 句型", "pct": 80},
+    {"name": "句型书写规则", "pct": 50},
+    {"name": "WH- 问句句型", "pct": 68}
+  ],
+
+  "modules": [
+    {
+      "color": "#1a9068",
+      "name": "Short A 词表复习 + 拼写练习",
+      "sub": "man cat can hat nap tap not does · 填空句子 · 拼写识别 · 押韵词（nap/map，cat/c）",
+      "vocab": ["man","cat","can","hat","nap","tap","not","does"]
+    },
+    {
+      "color": "#7F77DD",
+      "name": "绘本《Nat and Sam》+ 关键细节",
+      "sub": "Page 8 · 男孩 Nat 带玩具熊 Sam 上学 · 关键细节：Sam is a bear · Nat can read",
+      "vocab": ["nat","sam","school","bear","read","bag"]
+    },
+    {
+      "color": "#d4840a",
+      "name": "语法：完整句子 + 大写字母规则",
+      "sub": "完整句子 = 完整意思 + 大写首字母 · 辨别完整句子/非完整词组 · 识别大写 P/p",
+      "vocab": ["sentence","capital","idea","tag","play"]
+    },
+    {
+      "color": "#378ADD",
+      "name": "句子书写实践（大写 + 句号，9句）",
+      "sub": "Sam is at school · Dan can go to · A cat cannot go · You can go with me · I love my mom",
+      "vocab": ["school","tag","hop","ran","slide","me","mom"]
+    },
+    {
+      "color": "#D85A30",
+      "name": "绘本《We Like to Share》",
+      "sub": "作者 Rachel Tandy · 主题：在学校分享 · Rosa/Sam 喜欢的活动 · does/does not 句型",
+      "vocab": ["share","jump","rope","slide","help","ball","tag"]
+    }
+  ],
+
+  "sentence_patterns": [
+    {
+      "pattern": "S + can/cannot + V",
+      "example": "A cat cannot go.  Dan can go to school.  Nat can read.",
+      "category": "情态动词"
+    },
+    {
+      "pattern": "Who likes to + V? S does. / S does not.",
+      "example": "Who likes to jump rope? Rosa does.  Who likes to play tag? Sam does not.",
+      "category": "WH 问句 + 短答"
+    },
+    {
+      "pattern": "S + has + O",
+      "example": "Sam has a hat.  Dan has a bag.  The man has a bag.",
+      "category": "所有格句型"
+    },
+    {
+      "pattern": "We like to + V (+ at school)",
+      "example": "We like to play.  We like to share at school.",
+      "category": "共享活动句型"
+    },
+    {
+      "pattern": "[大写首字母] + 完整意思 + 句号",
+      "example": "Nat can go.  Sam has a bag.  [对比非句子：A cat.  Can see.]",
+      "category": "句型书写规则"
+    }
+  ],
+
+  "performance": {
+    "dimensions": [
+      {"label": "跟读流利度", "score": 3.5, "note": "仅5个样本（均值1.0s），课程以书写为主，跟读机会极少"},
+      {"label": "参与专注度", "score": 3, "note": "17次≥30s停滞全部为书写任务，无走神迹象，专注度本身不差"},
+      {"label": "纠错接受", "score": 3, "note": "书写纠错耗时长（80s、87s），口语纠错仍较快（4–12s）"},
+      {"label": "书写能力", "score": 1.5, "note": "每句50–90s，首字母大写和句号几乎每句遗漏，书写自主性极低"},
+      {"label": "朗读准确度", "score": 2.5, "note": "六课最低：两篇故事均有大量解码错误，词表独立朗读首轮多处错读"},
+      {"label": "语义理解", "score": 3.5, "note": "Who is Sam = bear 快速答对，完整句子概念辨别基本到位"}
+    ],
+    "highlights_good": [
+      "自编句子\"I love my mom\"（41:28-43:33）内容完整，展现语言感知和意愿表达",
+      "押韵词逻辑理解到位：在老师引导下正确识别 nap/map 押韵、c 不押韵，逻辑推断正确",
+      "完整句子辨别基本掌握：\"We ran\"、\"Pam has a bag\"、\"Nan can play\" 均正确识别为句子"
+    ],
+    "highlights_warn": [
+      "句子书写 9 句共耗时约 657s（近11分钟），每句首字母大写和句末句号几乎每句均遗漏，需建立自检习惯",
+      "故事朗读（Nat and Sam + We Like to Share）出现大量解码替换（\"南门\"/\"Dece does\"），篇章解码为六课最低分",
+      "词表独立朗读首轮（00:42–01:22）：man→\"南门\"、nap→\"neck\"、tap→错误，无老师支架时短元音辨识不稳定"
+    ],
+    "notes": ["课程无热身对话，从00:00直接进入内容；Speaker 3 在 36:01 说\"你别你别\"为家长背景干预；故事中人名 Rosa 被误转录为 ROS/Dece"],
+    "teacher_feedback_pos": ["Good job", "Very good", "That's right", "You got it", "There you go", "Awesome"],
+    "teacher_feedback_neg": ["Try out again", "Try again", "Let's write it again", "Don't forget your periods"],
+    "teacher_feedback_neutral": ["Can you use your mouse?", "Which letter needs to be a capital letter?", "Put an X next to", "Can you read number X?"],
+    "summary": "第6课为 Grade 1 Lesson 1 完整工作册课，内容最密集、书写量最大（约25分钟书写，17次≥30s停滞）。Short A 词表和句子练习为主线，聚焦完整句子规范书写（大写+句号）。Nova 在持续引导下完成9+个句子，但首字母大写和句号几乎每句均需提示。双篇绘本解码错误为六课最多，词表独立朗读也出现多处错读。跟读本课样本仅5次（均值1.0s）。"
+  },
+
+  "stage_assessment": {
+    "mastered": [
+      {"title": "口语跟读延迟", "detail": "六课均值区间 0.5–1.3s，本课5次样本均值1.0s，听觉模仿通道六课一致稳健"},
+      {"title": "情态动词 can/cannot", "detail": "L1 引入，L6 多句独立书写正确使用（\"A cat cannot go\"、\"Dan can go to\"等），六课持续稳固"},
+      {"title": "口语理解与应答", "detail": "关键细节理解快速准确（Sam = bear），完整句子辨别基本到位，理解层面六课持续稳定"}
+    ],
+    "needs_work": [
+      {"title": "句子书写规范（大写+句号）", "detail": "L6 新增核心短板：9个句子几乎每句遗漏首字母大写和句末句号，需建立稳定自检习惯"},
+      {"title": "书写速度与自主完成度", "detail": "L6 每句50–90s，总计25分钟书写；六课来看 L1: has=105s，L4: we=138s，L6: 全课书写极慢，自主性最低"},
+      {"title": "绘本段落解码", "detail": "六课持续：L6 两篇故事均有大量替换错误，无老师支架时词表朗读也不稳，篇章解码是最持久短板"},
+      {"title": "无老师支架时的书写准确度", "detail": "词表首轮独立朗读多处严重错读（man→\"南门\"），句子书写每步需提示，独立书写能力仍处起步阶段"}
+    ],
+    "summary": "六课数据呈现高度一致的能力格局：口语接收端（跟读、理解、情态动词）稳健，是 Nova 的跨课核心优势；书写输出端是持续最大挑战，且随一年级内容加深而愈发凸显。L6 为迄今书写负荷最重的一课（17次≥30s停滞，书写自主性极低，首字母大写和句末句号几乎每句需提醒），绘本解码错误也达六课最多。建议下阶段重点：①建立\"首字母大写+句末句号\"书写自检习惯（每句完成后自问）；②词级解码专项练习（CVC 短元音逐词辨音）；③适当减少单课书写句数、提升每句独立完成比例，以质量换速度。"
+  }
+}
