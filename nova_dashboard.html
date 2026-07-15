@@ -166,6 +166,15 @@ tr:last-child td{border-bottom:none}
 .cc-wtrack{flex:1;height:12px;background:var(--surface2);border-radius:6px;overflow:hidden}
 .cc-wfill{height:100%;border-radius:6px}
 .cc-wsec{width:44px;text-align:right;font-size:11px;font-weight:600;font-family:var(--mono);flex-shrink:0}
+/* ── SKILL SPARKLINES ──────────────────────────────── */
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.sk-cell{background:var(--surface2);border-radius:10px;padding:12px 14px 8px}
+.sk-head{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.sk-name{font-size:12px;font-weight:600;flex:1}
+.sk-last{font-size:15px;font-weight:600;font-family:var(--mono)}
+.sk-delta{font-size:10px;font-weight:600;font-family:var(--mono);padding:1px 6px;border-radius:4px}
+.sk-svg{width:100%;height:72px;display:block}
+.sk-x{display:flex;justify-content:space-between;font-size:9px;color:var(--text3);margin-top:2px}
 /* ── CALENDAR ──────────────────────────────────────── */
 .cal-months{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:12px}
 .cal-month{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 14px}
@@ -4259,6 +4268,34 @@ function buildTrendCharts() {
   </div>`;
 }
 
+// ── SKILL SPARKLINE ───────────────────────────────
+function skillSparkline(s) {
+  const W=320, H=76, padL=8, padR=42, padT=10, padB=8;
+  const plotW=W-padL-padR, plotH=H-padT-padB;
+  const n=s.vals.length;
+  const x=i=>n>1?padL+i/(n-1)*plotW:padL+plotW/2;
+  const y=v=>padT+(100-v)/100*plotH;
+  const pts=s.vals.map((v,i)=>v!==null?{i,v}:null).filter(Boolean);
+  const last=pts[pts.length-1], first=pts[0];
+  const delta=last.v-first.v;
+  const col=last.v>=75?'var(--green)':'var(--amber)';
+  const colText=last.v>=75?'var(--green-text)':'var(--amber-text)';
+  const line=pts.map(p=>`${x(p.i).toFixed(1)},${y(p.v).toFixed(1)}`).join(' ');
+  const deltaChip = pts.length>1
+    ? `<span class="sk-delta" style="background:${delta>=0?'var(--green-bg)':'var(--red-bg)'};color:${delta>=0?'var(--green-text)':'var(--red-text)'}">${delta>=0?'↑':'↓'} ${Math.abs(delta)}</span>`
+    : '';
+  return `<div class="sk-cell">
+    <div class="sk-head"><span class="sk-name">${s.name}</span>${deltaChip}<span class="sk-last" style="color:${colText}">${last.v}%</span></div>
+    <svg class="sk-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+      <line x1="${padL}" y1="${y(75)}" x2="${W-padR+14}" y2="${y(75)}" stroke="var(--border2)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="${W-padR+16}" y="${y(75)+3}" font-size="8" fill="var(--text3)">75</text>
+      ${pts.length>1?`<polyline points="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`:''}
+      ${pts.map(p=>`<circle cx="${x(p.i)}" cy="${y(p.v)}" r="${p===last?3.5:2.5}" fill="${p===last?col:'var(--surface)'}" stroke="${col}" stroke-width="1.5"/>`).join('')}
+    </svg>
+    <div class="sk-x"><span>L${lessons[0].lesson}</span><span>L${lessons[n-1].lesson}</span></div>
+  </div>`;
+}
+
 // ── PROGRESS PAGE ─────────────────────────────────
 function buildProgressPage() {
   const n = lessons.length;
@@ -4271,7 +4308,8 @@ function buildProgressPage() {
   const skillTrends = allSkillNames.map(name => {
     const vals = lessons.map(d => { const s=d.skills.find(x=>x.name===name); return s?s.pct:null; });
     return {name, vals};
-  }).filter(s=>s.vals.filter(v=>v!==null).length>1);
+  }).filter(s=>s.vals.some(v=>v!==null))
+    .sort((a,b)=>b.vals.filter(v=>v!==null).length-a.vals.filter(v=>v!==null).length);
 
   // ── Vocabulary accumulation ──────────────────────────────
   const colorLabels = {
@@ -4429,17 +4467,8 @@ function buildProgressPage() {
 
   <div class="stitle">技能掌握度趋势</div>
   <div class="card">
-    <div style="display:flex;gap:14px;margin-bottom:12px;font-size:11px;color:var(--text3)">
-      ${lessons.map((d,i)=>`<div style="display:flex;align-items:center;gap:5px"><div style="width:20px;height:5px;border-radius:3px;background:var(--green);opacity:${0.4+i*0.6}"></div>第${d.lesson}课</div>`).join('')}
-      <div style="display:flex;align-items:center;gap:5px"><div style="width:20px;height:5px;border-radius:3px;background:var(--amber)"></div>待加强</div>
-    </div>
-    ${skillTrends.map(s=>{
-      const last=s.vals.filter(v=>v!==null).slice(-1)[0];
-      return `<div class="stb-row">
-        <div class="stb-top"><span class="stb-name">${s.name}</span><span class="stb-vals">${s.vals.map((v,i)=>v!==null?`L${i+1}: ${v}%`:'').filter(Boolean).join(' ')}</span></div>
-        ${s.vals.map((v,i)=>v!==null?`<div class="stb-b" style="width:${v}%;background:${v>=75?'var(--green)':'var(--amber)'};opacity:${0.4+i*(0.6/Math.max(1,n-1))};margin-bottom:3px"></div>`:'').join('')}
-      </div>`;
-    }).join('')}
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px">每格一项技能：曲线 = 各课评估的掌握度（0–100），点 = 该课有练到。虚线为 75% 参考线（视为"稳定掌握"）。没练到的课次不打点，曲线跨过。</div>
+    <div class="sk-grid">${skillTrends.map(s=>skillSparkline(s)).join('')}</div>
   </div>
 
   <div class="stitle">词汇积累</div>
