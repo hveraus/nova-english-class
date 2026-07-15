@@ -145,6 +145,25 @@ tr:last-child td{border-bottom:none}
 .capture-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .15s;flex-shrink:0;white-space:nowrap}
 .capture-btn:hover{border-color:var(--text);color:var(--text)}
 .capture-btn:disabled{opacity:.45;cursor:not-allowed}
+/* ── CALENDAR ──────────────────────────────────────── */
+.cal-months{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:12px}
+.cal-month{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 14px}
+.cal-month-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-wday{font-size:10px;font-weight:600;color:var(--text3);text-align:center;padding:0 0 6px}
+.cal-day{min-height:36px;padding:3px 2px;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px}
+.cal-day.cal-today{outline:1.5px solid var(--border2)}
+.cal-day.cal-lesson{background:var(--purple-bg)}
+.cal-num{font-size:11px;color:var(--text3);line-height:1.2}
+.cal-day.cal-lesson .cal-num{color:var(--purple-text);font-weight:600}
+.cal-day.cal-today .cal-num{color:var(--text);font-weight:600}
+.cal-badge{font-size:9px;font-weight:700;background:var(--purple);color:#fff;border-radius:3px;padding:1px 4px;cursor:pointer;white-space:nowrap;letter-spacing:.02em}
+.cal-badge:hover{opacity:.8}
+.cal-toprow{display:flex;align-items:baseline;gap:14px;margin-bottom:6px}
+.cal-summary{font-size:13px;color:var(--text2)}
+.cal-summary strong{color:var(--text);font-weight:600}
+.cal-legend{display:flex;align-items:center;gap:6px;margin-top:14px;font-size:11px;color:var(--text3)}
+.cal-legend-dot{width:9px;height:9px;border-radius:2px;background:var(--purple-bg);border:1px solid var(--purple);display:inline-block}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -158,12 +177,14 @@ tr:last-child td{border-bottom:none}
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('progress',this)">整体进展</button>
     <button class="nav-tab" onclick="showPage('lessons',this)">课次记录</button>
+    <button class="nav-tab" onclick="showPage('calendar',this)">课次日历</button>
   </div>
   <div class="nav-right" id="lesson-switcher" style="display:none"></div>
 </nav>
 
 <div class="page active" id="page-progress"></div>
 <div class="page" id="page-lessons"></div>
+<div class="page" id="page-calendar"></div>
 <div class="foot" id="footer"></div>
 
 <!-- ══════════════════════════════════════
@@ -3422,6 +3443,62 @@ function buildProgressPage() {
 }
 
 // ── RENDER ────────────────────────────────────────
+// ── CALENDAR ──────────────────────────────────────────
+function buildCalendarPage() {
+  const lessonMap = {};
+  lessons.forEach(d => { lessonMap[d.date] = d.lesson; });
+
+  const dates = lessons.map(d => d.date).sort();
+  const first = new Date(dates[0]);
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0,10);
+
+  let cy = first.getFullYear(), cm = first.getMonth();
+  const ey = today.getFullYear(), em = today.getMonth();
+  const months = [];
+  while (cy < ey || (cy === ey && cm <= em)) {
+    months.push({year: cy, month: cm});
+    if (++cm > 11) { cm = 0; cy++; }
+  }
+
+  const WDAYS = ['一','二','三','四','五','六','日'];
+  const MNAMES = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+  function pad2(n){ return String(n).padStart(2,'0'); }
+
+  function renderMonth(year, month) {
+    const firstWday = (new Date(year, month, 1).getDay() + 6) % 7; // Mon=0
+    const days = new Date(year, month + 1, 0).getDate();
+    const header = WDAYS.map(w=>`<div class="cal-wday">${w}</div>`).join('');
+    let cells = '';
+    for (let i = 0; i < firstWday; i++) cells += '<div class="cal-day"></div>';
+    for (let d = 1; d <= days; d++) {
+      const ds = `${year}-${pad2(month+1)}-${pad2(d)}`;
+      const ln = lessonMap[ds];
+      const cls = ['cal-day', ln!==undefined?'cal-lesson':'', ds===todayStr?'cal-today':''].filter(Boolean).join(' ');
+      const badge = ln!==undefined ? `<span class="cal-badge" onclick="showLessonFromCalendar(${ln})">L${ln}</span>` : '';
+      cells += `<div class="${cls}"><span class="cal-num">${d}</span>${badge}</div>`;
+    }
+    return `<div class="cal-month"><div class="cal-month-title">${year}年 ${MNAMES[month]}</div><div class="cal-grid">${header}${cells}</div></div>`;
+  }
+
+  const totalMin = lessons.reduce((s,d)=>s+(d.duration_min||0),0);
+  return `
+    <div class="cal-toprow">
+      <div class="stitle">课次日历</div>
+      <div class="cal-summary">共 <strong>${lessons.length}</strong> 节课 · 累计 <strong>${totalMin}</strong> 分钟</div>
+    </div>
+    <div class="cal-months">${months.map(({year,month})=>renderMonth(year,month)).join('')}</div>
+    <div class="cal-legend"><span class="cal-legend-dot"></span><span>上课日（点击跳转课次详情）</span></div>`;
+}
+
+function showLessonFromCalendar(n) {
+  const navBtns = document.querySelectorAll('.nav-tab');
+  showPage('lessons', navBtns[1]);
+  const lsBtn = [...document.querySelectorAll('.ls-btn')].find(b=>b.textContent==='L'+n);
+  showLesson(n, lsBtn||null);
+}
+
 function renderAll() {
   // progress page
   $('page-progress').innerHTML = buildProgressPage();
@@ -3433,6 +3510,9 @@ function renderAll() {
   // lesson pages container
   const lp = $('page-lessons');
   lp.innerHTML = lessons.map((d,i)=>`<div id="lesson-${d.lesson}" class="lesson-slot" style="${i>0?'display:none':''}">${buildLessonPage(d)}</div>`).join('');
+
+  // calendar page
+  $('page-calendar').innerHTML = buildCalendarPage();
 
   // footer
   $('footer').textContent = `数据来源：${lessons.map(d=>d.source_file).join(' · ')} · 授课教师 Ashley · 学生 Nova · 时间码采样各课 n≥11`;
