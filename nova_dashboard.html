@@ -145,6 +145,27 @@ tr:last-child td{border-bottom:none}
 .capture-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .15s;flex-shrink:0;white-space:nowrap}
 .capture-btn:hover{border-color:var(--text);color:var(--text)}
 .capture-btn:disabled{opacity:.45;cursor:not-allowed}
+/* ── TREND CHARTS ──────────────────────────────────── */
+.cc-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+.cc-title{font-size:13px;font-weight:600}
+.cc-q{font-size:12px;color:var(--text2)}
+.cc-legend{display:flex;gap:12px;margin-top:8px;font-size:11px;color:var(--text2);flex-wrap:wrap}
+.cc-legend span{display:flex;align-items:center;gap:4px}
+.cc-dot{width:9px;height:9px;border-radius:2.5px;display:inline-block}
+.cc-cols{display:flex;align-items:flex-end;gap:10px;height:130px;margin-top:14px;padding-bottom:2px}
+.cc-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.cc-stack{width:100%;max-width:44px;display:flex;flex-direction:column;justify-content:flex-end;border-radius:5px;overflow:hidden}
+.cc-val{font-size:11px;font-weight:600;font-family:var(--mono);margin-bottom:3px}
+.cc-x{display:flex;gap:10px;margin-top:6px}
+.cc-xl{flex:1;text-align:center;font-size:11px;font-weight:600;color:var(--text2)}
+.cc-xl small{display:block;font-size:9px;font-weight:400;color:var(--text3);margin-top:1px}
+.cc-note{font-size:11px;color:var(--text3);margin-top:10px;padding-top:8px;border-top:1px solid var(--surface2);line-height:1.6}
+.cc-wrow{display:flex;align-items:center;gap:10px;padding:4px 0}
+.cc-wlab{width:210px;flex-shrink:0;font-size:11px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cc-wlab strong{color:var(--text);font-family:var(--mono)}
+.cc-wtrack{flex:1;height:12px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.cc-wfill{height:100%;border-radius:6px}
+.cc-wsec{width:44px;text-align:right;font-size:11px;font-weight:600;font-family:var(--mono);flex-shrink:0}
 /* ── CALENDAR ──────────────────────────────────────── */
 .cal-months{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:12px}
 .cal-month{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 14px}
@@ -4136,6 +4157,108 @@ function buildLessonPage(d) {
   return html;
 }
 
+// ── TREND CHARTS ──────────────────────────────────
+function ccXAxis(){
+  return `<div class="cc-x">${lessons.map(d=>`<div class="cc-xl">L${d.lesson}<small>${d.date.slice(5).replace('-','/')}</small></div>`).join('')}</div>`;
+}
+
+function buildTrendCharts() {
+  // 1) latency: share of samples answered within 1s
+  const latCols = lessons.map(d=>{
+    const rl = d.metrics.repeat_latency, n = rl.samples.length||1;
+    const fast = rl.samples.filter(s=>s.latency<=1).length;
+    const mid  = rl.samples.filter(s=>s.latency===2).length;
+    const slow = rl.samples.filter(s=>s.latency>=3).length;
+    return `<div class="cc-col">
+      <div class="cc-val" style="color:var(--green-text)">${Math.round(fast/n*100)}%</div>
+      <div class="cc-stack" style="height:${Math.round(n>0?100:0)}%">
+        ${slow?`<div style="height:${slow/n*100}%;background:var(--red)"></div>`:''}
+        ${mid?`<div style="height:${mid/n*100}%;background:var(--amber)"></div>`:''}
+        <div style="height:${fast/n*100}%;background:var(--green)"></div>
+      </div>
+      <div style="font-size:9px;color:var(--text3);margin-top:3px">n=${rl.n}${rl.low_confidence?'*':''}</div>
+    </div>`;
+  }).join('');
+
+  // 2) off-task gaps
+  const maxOff = Math.max(1,...lessons.map(d=>d.metrics.gaps_offtask_count));
+  const offCols = lessons.map(d=>{
+    const v = d.metrics.gaps_offtask_count;
+    return `<div class="cc-col">
+      <div class="cc-val" style="color:${v===0?'var(--green-text)':'var(--red-text)'}">${v===0?'✓':v+'次'}</div>
+      <div class="cc-stack" style="height:${v===0?3:Math.max(10,v/maxOff*100)}%">
+        <div style="height:100%;background:${v===0?'var(--green)':'var(--red)'}"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // 3) error rate per 10 min
+  const maxErr = Math.max(...lessons.map(d=>d.metrics.errors_per_10min||0), 0.1);
+  const errCols = lessons.map(d=>{
+    const v = d.metrics.errors_per_10min;
+    return `<div class="cc-col">
+      <div class="cc-val" style="color:var(--amber-text)">${v}</div>
+      <div class="cc-stack" style="height:${Math.max(6, v/maxErr*100)}%">
+        <div style="height:100%;background:var(--amber)"></div>
+      </div>
+      <div style="font-size:9px;color:var(--text3);margin-top:3px">共${d.metrics.errors_count}次</div>
+    </div>`;
+  }).join('');
+
+  // 4) representative writing task per lesson (slowest)
+  const wRows = lessons.map(d=>{
+    const w = [...d.metrics.writing_tasks].sort((a,b)=>b.seconds-a.seconds)[0];
+    return {lesson:d.lesson, name:w.name, seconds:w.seconds, rating:w.rating};
+  });
+  const maxW = Math.max(...wRows.map(w=>w.seconds));
+  const wHtml = wRows.map(w=>`
+    <div class="cc-wrow">
+      <div class="cc-wlab"><strong>L${w.lesson}</strong> · ${w.name}</div>
+      <div class="cc-wtrack"><div class="cc-wfill" style="width:${Math.max(2,Math.round(w.seconds/maxW*100))}%;background:${tbarColor(w.rating)}"></div></div>
+      <div class="cc-wsec" style="color:${tbarColor(w.rating)}">${w.seconds}s</div>
+    </div>`).join('');
+
+  return `
+  <div class="stitle">跨课次趋势（图表）</div>
+
+  <div class="card">
+    <div class="cc-head"><span class="cc-title">① 跟读反应速度</span><span class="cc-q">老师说完一个词/句，Nova 多快跟着说出来？绿色越多越好</span></div>
+    <div class="cc-cols">${latCols}</div>
+    ${ccXAxis()}
+    <div class="cc-legend">
+      <span><span class="cc-dot" style="background:var(--green)"></span>1秒内开口（好）</span>
+      <span><span class="cc-dot" style="background:var(--amber)"></span>2秒</span>
+      <span><span class="cc-dot" style="background:var(--red)"></span>3秒以上（慢）</span>
+    </div>
+    <div class="cc-note">柱顶百分比 = 1秒内开口的比例。${lessons.length}课始终保持在 ${Math.min(...lessons.map(d=>{const ss=d.metrics.repeat_latency.samples;return Math.round(ss.filter(s=>s.latency<=1).length/(ss.length||1)*100);}))}% 以上，说明"听到→跟着说"的通道一直很稳。带 * 的课次采样少（书写为主的课），参考即可。</div>
+  </div>
+
+  <div class="card">
+    <div class="cc-head"><span class="cc-title">② 专注度：没有任务时是否发呆</span><span class="cc-q">课堂上没在写字/操作时，出现过 ≥30 秒的沉默吗？✓ = 零次</span></div>
+    <div class="cc-cols">${offCols}</div>
+    ${ccXAxis()}
+    <div class="cc-note">写字、用鼠标、翻页时的长时间沉默是正常的任务耗时，<strong>不算走神</strong>，已从这里排除（各课的任务耗时见"课次记录"页）。${lessons.length}课里真正的任务外停滞合计仅 ${lessons.reduce((s,d)=>s+d.metrics.gaps_offtask_count,0)} 次，专注度整体良好；出现停滞的课次多与页面理解困难相关，属理解卡顿而非走神。</div>
+  </div>
+
+  <div class="card">
+    <div class="cc-head"><span class="cc-title">③ 朗读错误密度</span><span class="cc-q">平均每上课 10 分钟，朗读/书写出错几次？</span></div>
+    <div class="cc-cols">${errCols}</div>
+    ${ccXAxis()}
+    <div class="cc-note">已按课长折算，长课短课可以直接比。注意：错误密度高的课（${[...lessons].sort((a,b)=>b.metrics.errors_per_10min-a.metrics.errors_per_10min).slice(0,2).map(d=>'L'+d.lesson).join('、')}）都是独立朗读任务特别多的课——数字高更多说明"这节课对解码要求高"，不代表能力退步。</div>
+  </div>
+
+  <div class="card">
+    <div class="cc-head"><span class="cc-title">④ 书写耗时：每课最慢的一项任务</span><span class="cc-q">条越短完成越快。注意各课任务难度不同，看大方向即可</span></div>
+    <div style="margin-top:10px">${wHtml}</div>
+    <div class="cc-legend" style="margin-top:12px">
+      <span><span class="cc-dot" style="background:var(--green)"></span>快</span>
+      <span><span class="cc-dot" style="background:var(--amber)"></span>中等</span>
+      <span><span class="cc-dot" style="background:var(--red)"></span>慢</span>
+    </div>
+    <div class="cc-note">单词级书写已明显提速（L9 复数名词每题仅 7–12 秒）；目前最慢的是"写完整句子"类任务（L6/L8），是下阶段重点。</div>
+  </div>`;
+}
+
 // ── PROGRESS PAGE ─────────────────────────────────
 function buildProgressPage() {
   const n = lessons.length;
@@ -4302,40 +4425,7 @@ function buildProgressPage() {
     </div>
   </div>
 
-  <div class="stitle">跨课次详细对比</div>
-  <div class="card">
-    <table class="trend-tbl">
-      <tr>
-        <th style="width:160px">指标</th>
-        ${lessons.map(d=>`<th>第 ${d.lesson} 课<br><span class="t-note">${d.date} · ${d.duration_min}min</span></th>`).join('')}
-        <th>趋势</th><th>说明</th>
-      </tr>
-      <tr>
-        <td>跟读延迟分布</td>
-        ${lessons.map(d=>`<td>${latDist(d.metrics.repeat_latency)}${d.metrics.repeat_latency.low_confidence?'<br><span class="t-note">n&lt;8 低置信</span>':''}</td>`).join('')}
-        <td><span class="t-eq">→ 稳定</span></td>
-        <td class="t-note">绝大多数样本 ≤1s，通道稳健</td>
-      </tr>
-      <tr>
-        <td>任务外停滞 (≥30s)</td>
-        ${lessons.map(d=>`<td><strong>${d.metrics.gaps_offtask_count}</strong> 次<br><span class="t-note">任务内 ${d.metrics.gaps_task_count}</span></td>`).join('')}
-        <td><span class="t-eq">→ 低位</span></td>
-        <td class="t-note">任务内停滞=书写/操作耗时，属预期</td>
-      </tr>
-      <tr>
-        <td>朗读错误率</td>
-        ${lessons.map(d=>`<td>${d.metrics.errors_per_10min}<span class="t-note">/10min</span><br><span class="t-note">共${d.metrics.errors_count}次</span></td>`).join('')}
-        <td><span class="t-eq">→ 持平</span></td>
-        <td class="t-note">按课长归一化后波动不大</td>
-      </tr>
-      <tr>
-        <td>书写耗时（代表词）</td>
-        ${lessons.map(d=>{const w=d.metrics.writing_tasks.find(t=>t.rating==='slow')||d.metrics.writing_tasks[0];return `<td>${w.name}=${w.seconds}s</td>`;}).join('')}
-        <td><span class="t-up">↓ 显著</span></td>
-        <td class="t-note">L2改跟读模式，可比性有限</td>
-      </tr>
-    </table>
-  </div>
+  ${buildTrendCharts()}
 
   <div class="stitle">技能掌握度趋势</div>
   <div class="card">
