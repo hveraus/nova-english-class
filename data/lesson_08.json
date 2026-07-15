@@ -5,7 +5,7 @@
   "time_range": "00:00–44:00",
   "teacher": "Ashley",
   "source_file": "GMT20260712-101623_Recording.m4a.md",
-  "version_note": "本课转录无说话人标注，通过对话内容推断；录音开头\"There we go. Okay, so let's keep going.\"显示课前已有设置；Ashley 全程混用英葡双语（口语解释段落）；42:50–42:57 Ashley 短暂切换为德语（\"Wir schreiben, Pull auf die reine\"），疑为笔误或语言混用；课末 Nova 说\"Bye Ashley\"确认教师姓名",
+  "version_note": "本课转录无说话人标注，通过对话内容推断；录音开头\"There we go. Okay, so let's keep going.\"显示课前已有设置；Ashley 全程混用英葡双语（口语解释段落）；42:50–42:57 处转录出现德语文本（\"Wir schreiben…\"），系转录引擎语言识别错误（英/葡语音被误配德语模型），非教师实际用语；课末 Nova 说\"Bye Ashley\"确认教师姓名",
 
   "metrics": {
     "repeat_latency": {

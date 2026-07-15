@@ -206,6 +206,15 @@ def insert_lesson(conn, data):
     return True
 
 
+# Gap types that are expected task time (already covered by writing_tasks),
+# vs. off-task gaps that are genuine attention signals.
+TASK_GAP_TYPES = {"writing", "mouse-task", "mouse-failure", "page-turn",
+                  "reading", "read-page", "technical"}
+
+# Latency samples below this count are too small for a reliable mean.
+LATENCY_MIN_N = 8
+
+
 def load_lesson(conn, lesson_id):
     """Reconstruct a full lesson dict from all DB tables."""
     row = dict(conn.execute("SELECT * FROM lessons WHERE lesson_id=?", (lesson_id,)).fetchone())
@@ -253,6 +262,18 @@ def load_lesson(conn, lesson_id):
     fb_neg  = texts("SELECT text FROM teacher_feedback WHERE lesson_id=? AND type='neg' ORDER BY id", lesson_id)
     fb_neu  = texts("SELECT text FROM teacher_feedback WHERE lesson_id=? AND type='neutral' ORDER BY id", lesson_id)
 
+    # Derived metrics, recomputed from detail rows on every load.
+    dist = {}
+    for s in samples:
+        key = str(s["latency"])
+        dist[key] = dist.get(key, 0) + 1
+    alert_gaps = [g for g in gaps if g.get("flag") == "alert"]
+    gaps_task = sum(1 for g in alert_gaps if g["type"] in TASK_GAP_TYPES)
+    gaps_offtask = len(alert_gaps) - gaps_task
+    errors_per_10min = (
+        round(row["errors_count"] / row["duration_min"] * 10, 1)
+        if row["duration_min"] else None)
+
     result = {
         "lesson": row["lesson_id"],
         "date": row["date"],
@@ -265,13 +286,18 @@ def load_lesson(conn, lesson_id):
                 "mean": row["latency_mean"],
                 "max": row["latency_max"],
                 "n": row["latency_n"],
+                "dist": dist,
+                "low_confidence": row["latency_n"] < LATENCY_MIN_N,
                 "samples": samples,
             },
             "writing_tasks": writing,
             "attention_gaps": gaps,
             "error_corrections": errors,
             "gaps_30s_count": row["gaps_30s_count"],
+            "gaps_task_count": gaps_task,
+            "gaps_offtask_count": gaps_offtask,
             "errors_count": row["errors_count"],
+            "errors_per_10min": errors_per_10min,
             "oral_written_ratio": row["oral_written_ratio"],
         },
         "sentence_patterns": json.loads(row.get("sentence_patterns") or "[]"),
