@@ -5,103 +5,340 @@
   "time_range": "01:30–26:38",
   "teacher": "Ashley",
   "source_file": "7月 15 日上课记录.md",
-  "version_note": "文件名为\"7月15日\"但录音文件名 GMT20260714 及用户确认为 7 月 14 日课程；转录无说话人标注，通过对话内容推断（01:30 Nova \"Hi Ashley\"开场）；02:59 \"My name is Caroline Isaacs\"为转录异常文本（疑背景音/课件音频误录），不计入分析；04:13 出现葡语转录 blob；01:00–01:14 为课前残留，已排除",
-
+  "version_note": "文件名为\"7月15日\"但录音文件名 GMT20260714 及用户确认为 7 月 14 日课程；转录无说话人标注，通过对话内容推断（01:30 Nova \"Hi Ashley\"开场）；02:59 \"My name is Caroline Isaacs\"及 04:13 葡语文本均为转录误识别，已排除；01:00–01:14 为课前残留，已排除",
   "metrics": {
     "repeat_latency": {
       "mean": 1.4,
       "max": 5,
       "n": 12,
       "samples": [
-        {"scene": "\"I painted today\" 过去式引导跟读", "ts": "02:29→02:30", "latency": 1},
-        {"scene": "\"Glad\" 纠正跟读", "ts": "07:48→07:49", "latency": 1},
-        {"scene": "\"Flick is a cat\" 关键细节句跟读", "ts": "08:13→08:18", "latency": 5, "note": "含看页面定位时间"},
-        {"scene": "\"Fuzz\" 纠正跟读", "ts": "15:16→15:17", "latency": 1},
-        {"scene": "\"I like to paint with my friends\" 全句跟读", "ts": "17:39→17:40", "latency": 1},
-        {"scene": "\"I like to paint\" 分段跟读", "ts": "18:26→18:28", "latency": 2},
-        {"scene": "\"With my friends\" 分段跟读", "ts": "18:33→18:34", "latency": 1},
-        {"scene": "词汇 \"fun\" 跟读", "ts": "18:47→18:50", "latency": 3},
-        {"scene": "\"We like to skate, too!\" 跟读", "ts": "19:40→19:40", "latency": 0},
-        {"scene": "\"Hop\" Short O 示范跟读", "ts": "22:15→22:16", "latency": 1},
-        {"scene": "\"Toss\" 词表跟读", "ts": "23:02→23:03", "latency": 1},
-        {"scene": "\"Mops\" 词表跟读", "ts": "23:05→23:05", "latency": 0}
+        {
+          "scene": "\"I painted today\" 过去式引导跟读",
+          "ts": "02:29→02:30",
+          "latency": 1
+        },
+        {
+          "scene": "\"Glad\" 纠正跟读",
+          "ts": "07:48→07:49",
+          "latency": 1
+        },
+        {
+          "scene": "\"Flick is a cat\" 关键细节句跟读",
+          "ts": "08:13→08:18",
+          "latency": 5,
+          "note": "含看页面定位时间"
+        },
+        {
+          "scene": "\"Fuzz\" 纠正跟读",
+          "ts": "15:16→15:17",
+          "latency": 1
+        },
+        {
+          "scene": "\"I like to paint with my friends\" 全句跟读",
+          "ts": "17:39→17:40",
+          "latency": 1
+        },
+        {
+          "scene": "\"I like to paint\" 分段跟读",
+          "ts": "18:26→18:28",
+          "latency": 2
+        },
+        {
+          "scene": "\"With my friends\" 分段跟读",
+          "ts": "18:33→18:34",
+          "latency": 1
+        },
+        {
+          "scene": "词汇 \"fun\" 跟读",
+          "ts": "18:47→18:50",
+          "latency": 3
+        },
+        {
+          "scene": "\"We like to skate, too!\" 跟读",
+          "ts": "19:40→19:40",
+          "latency": 0
+        },
+        {
+          "scene": "\"Hop\" Short O 示范跟读",
+          "ts": "22:15→22:16",
+          "latency": 1
+        },
+        {
+          "scene": "\"Toss\" 词表跟读",
+          "ts": "23:02→23:03",
+          "latency": 1
+        },
+        {
+          "scene": "\"Mops\" 词表跟读",
+          "ts": "23:05→23:05",
+          "latency": 0
+        }
       ]
     },
     "writing_tasks": [
-      {"name": "复习填写 slam（首字母 M/G 混淆）", "type": "fill-blank", "ts": "05:13→05:56", "seconds": 43, "rating": "mid", "note": "首写 G，Ashley \"Not G\"提示后改为 M"},
-      {"name": "复习填写 log", "type": "fill-blank", "ts": "06:08→06:38", "seconds": 30, "rating": "mid"},
-      {"name": "《Kim and Flick》关键细节：写 hid", "type": "fill-blank", "ts": "08:32→09:04", "seconds": 32, "rating": "mid", "note": "含朗读句子时间"},
-      {"name": "《Kim and Flick》关键细节：写 come", "type": "fill-blank", "ts": "11:02→11:39", "seconds": 37, "rating": "mid", "note": "Ashley 提示\"Don't forget your E\""},
-      {"name": "复数名词三题（flags/cats/fins）", "type": "whole-word", "ts": "13:13→14:01", "seconds": 48, "rating": "fast", "note": "单题仅 7–12s，为九课以来最快书写纪录"},
-      {"name": "Labels 填写 fin + fuzz（含字母 Z 笔顺教学）", "type": "whole-word", "ts": "15:00→15:54", "seconds": 54, "rating": "mid", "note": "fin 快速完成；fuzz 的 Z 笔顺需 Ashley 逐笔示范"}
+      {
+        "name": "复习填写 slam（首字母 M/G 混淆）",
+        "type": "fill-blank",
+        "ts": "05:13→05:56",
+        "seconds": 43,
+        "rating": "mid",
+        "note": "首写 G，Ashley \"Not G\"提示后改为 M"
+      },
+      {
+        "name": "复习填写 log",
+        "type": "fill-blank",
+        "ts": "06:08→06:38",
+        "seconds": 30,
+        "rating": "mid"
+      },
+      {
+        "name": "《Kim and Flick》关键细节：写 hid",
+        "type": "fill-blank",
+        "ts": "08:32→09:04",
+        "seconds": 32,
+        "rating": "mid",
+        "note": "含朗读句子时间"
+      },
+      {
+        "name": "《Kim and Flick》关键细节：写 come",
+        "type": "fill-blank",
+        "ts": "11:02→11:39",
+        "seconds": 37,
+        "rating": "mid",
+        "note": "Ashley 提示\"Don't forget your E\""
+      },
+      {
+        "name": "复数名词三题（flags/cats/fins）",
+        "type": "whole-word",
+        "ts": "13:13→14:01",
+        "seconds": 48,
+        "rating": "fast",
+        "note": "单题仅 7–12s，为九课以来最快书写纪录"
+      },
+      {
+        "name": "Labels 填写 fin + fuzz（含字母 Z 笔顺教学）",
+        "type": "whole-word",
+        "ts": "15:00→15:54",
+        "seconds": 54,
+        "rating": "mid",
+        "note": "fin 快速完成；fuzz 的 Z 笔顺需 Ashley 逐笔示范"
+      }
     ],
     "attention_gaps": [
-      {"scene": "屏幕共享启动（师生转场）", "ts": "03:10→04:13", "seconds": 63, "type": "technical", "flag": "alert"},
-      {"scene": "复习填写 log 书写", "ts": "06:08→06:38", "seconds": 30, "type": "writing", "flag": "alert"},
-      {"scene": "关键细节第3题作答", "ts": "09:19→10:20", "seconds": 61, "type": "writing", "flag": "alert"},
-      {"scene": "写 come 书写段", "ts": "11:07→11:39", "seconds": 32, "type": "writing", "flag": "alert"},
-      {"scene": "复数名词第1/2题读句找词", "ts": "12:33→13:13", "seconds": 40, "type": "writing", "flag": "alert"},
-      {"scene": "Ashley 屏幕标注重做（\"I didn't want you to do that\"）", "ts": "20:39→21:14", "seconds": 35, "type": "technical", "flag": "alert"},
-      {"scene": "Short O 词表朗读起步", "ts": "22:30→23:01", "seconds": 31, "type": "reading", "flag": "alert"},
-      {"scene": "翻页至故事预告", "ts": "25:48→26:18", "seconds": 30, "type": "page-turn", "flag": "alert"}
+      {
+        "scene": "屏幕共享启动（师生转场）",
+        "ts": "03:10→04:13",
+        "seconds": 63,
+        "type": "technical",
+        "flag": "alert"
+      },
+      {
+        "scene": "复习填写 log 书写",
+        "ts": "06:08→06:38",
+        "seconds": 30,
+        "type": "writing",
+        "flag": "alert"
+      },
+      {
+        "scene": "关键细节第3题作答",
+        "ts": "09:19→10:20",
+        "seconds": 61,
+        "type": "writing",
+        "flag": "alert"
+      },
+      {
+        "scene": "写 come 书写段",
+        "ts": "11:07→11:39",
+        "seconds": 32,
+        "type": "writing",
+        "flag": "alert"
+      },
+      {
+        "scene": "复数名词第1/2题读句找词",
+        "ts": "12:33→13:13",
+        "seconds": 40,
+        "type": "writing",
+        "flag": "alert"
+      },
+      {
+        "scene": "Ashley 屏幕标注重做（\"I didn't want you to do that\"）",
+        "ts": "20:39→21:14",
+        "seconds": 35,
+        "type": "technical",
+        "flag": "alert"
+      },
+      {
+        "scene": "Short O 词表朗读起步",
+        "ts": "22:30→23:01",
+        "seconds": 31,
+        "type": "reading",
+        "flag": "alert"
+      },
+      {
+        "scene": "翻页至故事预告",
+        "ts": "25:48→26:18",
+        "seconds": 30,
+        "type": "page-turn",
+        "flag": "alert"
+      }
     ],
     "error_corrections": [
-      {"error": "slam 首字母写成 G → M", "ts": "05:39→05:56", "seconds": 17, "prompt_type": "direct", "note": "Ashley \"Not G\" → \"I mean M\" 后改正"},
-      {"error": "\"food\" → \"fuzz\"（labels 朗读）", "ts": "15:11→15:17", "seconds": 6, "prompt_type": "direct"},
-      {"error": "\"I like to painting\" → \"I like to paint\"（动词形式过度泛化）", "ts": "17:29→17:43", "seconds": 14, "prompt_type": "modeled"},
-      {"error": "\"I like paint to my friends\"（词序错乱）→ 分段示范后正确", "ts": "18:10→18:35", "seconds": 25, "prompt_type": "modeled-repeat", "note": "Ashley 拆成 \"I like to paint\" + \"With my friends\" 两段示范"},
-      {"error": "\"We like skate, too\"（漏 to）", "ts": "19:50→20:05", "seconds": 15, "prompt_type": "modeled", "note": "引出 to/too/two 同音词专项讲解"},
-      {"error": "\"Jig\" → \"Jog\"（Short O 词表）", "ts": "23:20→23:22", "seconds": 2, "prompt_type": "direct"},
-      {"error": "\"Ron can jog a toss\" → \"a lot\"（句子朗读）", "ts": "24:48→24:52", "seconds": 4, "prompt_type": "direct"},
-      {"error": "Short O 故事词表独立朗读混读（toss→\"Cos\"、block→\"black\"、flop→\"glass\"）", "ts": "25:25→25:48", "seconds": 23, "prompt_type": "explanation", "note": "Ashley 逐词核对\"You got this one, this one, this one\"，部分未纠"}
+      {
+        "error": "slam 首字母写成 G → M",
+        "ts": "05:39→05:56",
+        "seconds": 17,
+        "prompt_type": "direct",
+        "note": "Ashley \"Not G\" → \"I mean M\" 后改正"
+      },
+      {
+        "error": "\"food\" → \"fuzz\"（labels 朗读）",
+        "ts": "15:11→15:17",
+        "seconds": 6,
+        "prompt_type": "direct"
+      },
+      {
+        "error": "\"I like to painting\" → \"I like to paint\"（动词形式过度泛化）",
+        "ts": "17:29→17:43",
+        "seconds": 14,
+        "prompt_type": "modeled"
+      },
+      {
+        "error": "\"I like paint to my friends\"（词序错乱）→ 分段示范后正确",
+        "ts": "18:10→18:35",
+        "seconds": 25,
+        "prompt_type": "modeled-repeat",
+        "note": "Ashley 拆成 \"I like to paint\" + \"With my friends\" 两段示范"
+      },
+      {
+        "error": "\"We like skate, too\"（漏 to）",
+        "ts": "19:50→20:05",
+        "seconds": 15,
+        "prompt_type": "modeled",
+        "note": "引出 to/too/two 同音词专项讲解"
+      },
+      {
+        "error": "\"Jig\" → \"Jog\"（Short O 词表）",
+        "ts": "23:20→23:22",
+        "seconds": 2,
+        "prompt_type": "direct"
+      },
+      {
+        "error": "\"Ron can jog a toss\" → \"a lot\"（句子朗读）",
+        "ts": "24:48→24:52",
+        "seconds": 4,
+        "prompt_type": "direct"
+      },
+      {
+        "error": "Short O 故事词表独立朗读混读（toss→\"Cos\"、block→\"black\"、flop→\"glass\"）",
+        "ts": "25:25→25:48",
+        "seconds": 23,
+        "prompt_type": "explanation",
+        "note": "Ashley 逐词核对\"You got this one, this one, this one\"，部分未纠"
+      }
     ],
     "gaps_30s_count": 8,
     "errors_count": 8,
     "oral_written_ratio": "2:1"
   },
-
   "skills": [
-    {"name": "短元音 Short O", "pct": 70},
-    {"name": "L 辅音组合", "pct": 75},
-    {"name": "视觉词拼写", "pct": 70},
-    {"name": "绘本朗读", "pct": 50},
-    {"name": "复数名词 -s", "pct": 65},
-    {"name": "can/cannot 句型", "pct": 82}
+    {
+      "name": "短元音 Short O",
+      "pct": 70
+    },
+    {
+      "name": "L 辅音组合",
+      "pct": 75
+    },
+    {
+      "name": "视觉词拼写",
+      "pct": 70
+    },
+    {
+      "name": "绘本朗读",
+      "pct": 50
+    },
+    {
+      "name": "复数名词 -s",
+      "pct": 65
+    },
+    {
+      "name": "can/cannot 句型",
+      "pct": 82
+    }
   ],
-
   "modules": [
     {
       "color": "#7F77DD",
       "name": "热身对话（绘画·食物·天气）",
       "sub": "I painted today（过去式引导）· I ate rice · It's hot and sunny",
-      "vocab": ["painted","rice","hot","sunny","happy"]
+      "vocab": [
+        "painted",
+        "rice",
+        "hot",
+        "sunny",
+        "happy"
+      ]
     },
     {
       "color": "#d4840a",
       "name": "复习：L 辅音句子 + 《Kim and Flick》关键细节",
       "sub": "clap · slam · log 填写 · Flick is a cat / hid in the tree / come 关键细节填空",
-      "vocab": ["clap","slam","log","hid","come","glad"]
+      "vocab": [
+        "clap",
+        "slam",
+        "log",
+        "hid",
+        "come",
+        "glad"
+      ]
     },
     {
       "color": "#1a9068",
       "name": "语法：复数名词 -s + 文本特征 Labels",
       "sub": "flag→flags 加S表复数 · 找句中复数词 · labels 命名图片 · wing/fin/fuzz · 字母Z笔顺",
-      "vocab": ["flags","cats","fins","wing","fin","fuzz","label"]
+      "vocab": [
+        "flags",
+        "cats",
+        "fins",
+        "wing",
+        "fin",
+        "fuzz",
+        "label"
+      ]
     },
     {
       "color": "#378ADD",
       "name": "新单元 Let's Be Friends + 核心词汇",
       "sub": "I like to paint with my friends · 词汇 fun/make/they/too · to/too/two 同音词辨析",
-      "vocab": ["fun","make","they","too","two","friends","skate"]
+      "vocab": [
+        "fun",
+        "make",
+        "they",
+        "too",
+        "two",
+        "friends",
+        "skate"
+      ]
     },
     {
       "color": "#D85A30",
       "name": "短元音 Short O + 故事《Toss Kick Hop》预告",
       "sub": "Short O 说 ah · box toss mops hop jog · Can Ron jog on a hot day? · 故事留待下节课",
-      "vocab": ["box","toss","mops","hop","jog","hot","dots","top","flop","block","dolls"]
+      "vocab": [
+        "box",
+        "toss",
+        "mops",
+        "hop",
+        "jog",
+        "hot",
+        "dots",
+        "top",
+        "flop",
+        "block",
+        "dolls"
+      ]
     }
   ],
-
   "sentence_patterns": [
     {
       "pattern": "I + 过去式 + today",
@@ -129,15 +366,38 @@
       "category": "特征描述"
     }
   ],
-
   "performance": {
     "dimensions": [
-      {"label": "跟读流利度", "score": 3.5, "note": "12样本中9个≤1s；出现2个≥3s样本（含页面定位因素）"},
-      {"label": "参与专注度", "score": 4.0, "note": "8次停滞全为任务内（书写/技术/翻页），任务外0次"},
-      {"label": "纠错接受", "score": 3.5, "note": "8次错误在2–25s内接受引导；词序错误需分段示范"},
-      {"label": "书写能力", "score": 3.0, "note": "复数名词单题7–12s创最快纪录；单词级书写明显提速"},
-      {"label": "朗读准确度", "score": 2.5, "note": "Short O 词表独立朗读混读多（toss→Cos、flop→glass）"},
-      {"label": "语义理解", "score": 3.5, "note": "复数-s、labels 概念当场理解并正确应用；to/too/two 部分吸收"}
+      {
+        "label": "跟读流利度",
+        "score": 3.5,
+        "note": "12样本中9个≤1s；出现2个≥3s样本（含页面定位因素）"
+      },
+      {
+        "label": "参与专注度",
+        "score": 4.0,
+        "note": "8次停滞全为任务内（书写/技术/翻页），任务外0次"
+      },
+      {
+        "label": "纠错接受",
+        "score": 3.5,
+        "note": "8次错误在2–25s内接受引导；词序错误需分段示范"
+      },
+      {
+        "label": "书写能力",
+        "score": 3.0,
+        "note": "复数名词单题7–12s创最快纪录；单词级书写明显提速"
+      },
+      {
+        "label": "朗读准确度",
+        "score": 2.5,
+        "note": "Short O 词表独立朗读混读多（toss→Cos、flop→glass）"
+      },
+      {
+        "label": "语义理解",
+        "score": 3.5,
+        "note": "复数-s、labels 概念当场理解并正确应用；to/too/two 部分吸收"
+      }
     ],
     "highlights_good": [
       "单词书写速度显著提升：复数名词三题单题仅 7–12s（对比 L6 同类任务 50–90s），\"fin\" 8s 内完成——书写提速是本课最大亮点",
@@ -149,25 +409,67 @@
       "\"I like to paint with my friends\" 需 4 次重试：先\"painting\"过度泛化，再\"paint to my friends\"词序错乱，口头句子组织出现新信号",
       "视觉词 to/too/two 同音辨析为新难点，\"We like skate, too\"漏 to 触发专项讲解"
     ],
-    "notes": ["02:59 \"My name is Caroline Isaacs\"为转录异常，不计入分析；20:39 停滞为 Ashley 屏幕标注操作失误重做，非学生原因"],
-    "teacher_feedback_pos": ["Good job Nova", "Very good", "There you go", "You got it", "Wonderful", "Awesome"],
-    "teacher_feedback_neg": ["Try that one again", "Not G", "Let's try it one more time", "Not painting"],
-    "teacher_feedback_neutral": ["Can you read that?", "Write the word on the line", "Can you say that?", "Read them for me one more time on your own"],
+    "notes": [
+      "02:59 \"My name is Caroline Isaacs\"为转录异常，不计入分析；20:39 停滞为 Ashley 屏幕标注操作失误重做，非学生原因"
+    ],
+    "teacher_feedback_pos": [
+      "Good job Nova",
+      "Very good",
+      "There you go",
+      "You got it",
+      "Wonderful",
+      "Awesome"
+    ],
+    "teacher_feedback_neg": [
+      "Try that one again",
+      "Not G",
+      "Let's try it one more time",
+      "Not painting"
+    ],
+    "teacher_feedback_neutral": [
+      "Can you read that?",
+      "Write the word on the line",
+      "Can you say that?",
+      "Read them for me one more time on your own"
+    ],
     "summary": "第9课以复习+新单元开篇为主线：复习 L 辅音与《Kim and Flick》细节，讲解复数名词-s 和 labels 文本特征，开启新单元 Let's Be Friends，并预习 Short O。本课最大亮点是单词书写显著提速（复数名词单题 7–12s，对比 L6 的 50–90s）；任务外停滞 0 次。主要挑战：Short O 词表独立混读、\"I like to paint\"句式 4 次重试、to/too/two 同音新难点。故事《Toss Kick Hop》留待下节课。"
   },
-
   "stage_assessment": {
     "mastered": [
-      {"title": "口语跟读延迟", "detail": "九课分布稳定，绝大多数样本≤1s（L9 12样本中9个≤1s）；≥3s 样本均有页面定位等情境因素"},
-      {"title": "任务外专注度", "detail": "新口径下九课任务外停滞合计仅9次，L4/L7/L8/L9 中三课为0；专注度从来不是问题，此前的高停滞数均为书写任务耗时"},
-      {"title": "情态动词与基础句型", "detail": "can/cannot 九课持续自然运用；S+has+N、I like to 等句型口头理解顺畅"},
-      {"title": "新概念即时吸收", "detail": "L8 陈述句规则、L9 复数-s 与 labels 均为讲解后当场正确应用，概念输入通道强"}
+      {
+        "title": "口语跟读延迟",
+        "detail": "九课分布稳定，绝大多数样本≤1s（L9 12样本中9个≤1s）；≥3s 样本均有页面定位等情境因素"
+      },
+      {
+        "title": "任务外专注度",
+        "detail": "新口径下九课任务外停滞合计仅9次，L4/L7/L8/L9 中三课为0；专注度从来不是问题，此前的高停滞数均为书写任务耗时"
+      },
+      {
+        "title": "情态动词与基础句型",
+        "detail": "can/cannot 九课持续自然运用；S+has+N、I like to 等句型口头理解顺畅"
+      },
+      {
+        "title": "新概念即时吸收",
+        "detail": "L8 陈述句规则、L9 复数-s 与 labels 均为讲解后当场正确应用，概念输入通道强"
+      }
     ],
     "needs_work": [
-      {"title": "无支架独立解码", "detail": "九课最顽固短板：L9 Short O 词表混读（toss→Cos、flop→glass）、L7 词表错读、历课绘本替换——有示范时准确，无示范时靠猜"},
-      {"title": "口头句子组织（新信号）", "detail": "L9 \"I like to painting\"过度泛化、\"paint to my friends\"词序错乱；随着句长增加，输出端语法组织开始暴露问题"},
-      {"title": "同音视觉词辨析", "detail": "to/too/two 为 L9 新引入难点，首次接触仅部分吸收，需后续课次追踪"},
-      {"title": "完整句书写", "detail": "单词级书写已大幅提速（7–12s/词），但完整句书写（L8 改写陈述句 100+s/句）仍是速度瓶颈，本课未涉长句书写待验证"}
+      {
+        "title": "无支架独立解码",
+        "detail": "九课最顽固短板：L9 Short O 词表混读（toss→Cos、flop→glass）、L7 词表错读、历课绘本替换——有示范时准确，无示范时靠猜"
+      },
+      {
+        "title": "口头句子组织（新信号）",
+        "detail": "L9 \"I like to painting\"过度泛化、\"paint to my friends\"词序错乱；随着句长增加，输出端语法组织开始暴露问题"
+      },
+      {
+        "title": "同音视觉词辨析",
+        "detail": "to/too/two 为 L9 新引入难点，首次接触仅部分吸收，需后续课次追踪"
+      },
+      {
+        "title": "完整句书写",
+        "detail": "单词级书写已大幅提速（7–12s/词），但完整句书写（L8 改写陈述句 100+s/句）仍是速度瓶颈，本课未涉长句书写待验证"
+      }
     ],
     "summary": "九课数据出现两个重要拐点：一是单词书写速度大幅提升（L9 复数名词 7–12s/题，对比 L6 同类 50–90s），书写通道的\"单词层\"正在打通；二是新口径确认专注度从不是问题（九课任务外停滞合计9次，近四课三课为0）。当前矛盾集中在两处：无支架独立解码（九课未见实质改善，Short O 词表混读延续既往模式）和随句长增长暴露的口头语法组织（painting 泛化、词序错乱）。L9 错误率 3.2/10min 与 L7 的 3.1 同为高位，共同特点是独立朗读任务密度高——错误率高低更多反映课程对解码的要求强度，而非能力退步。建议：①下节课《Toss Kick Hop》故事阅读采用逐词指点，验证 Short O 解码；②\"I like to + 动词原形\"句式口头专练；③追踪 to/too/two 辨析留存率。"
   }
