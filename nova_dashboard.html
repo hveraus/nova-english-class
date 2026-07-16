@@ -196,6 +196,18 @@ tr:last-child td{border-bottom:none}
 .cal-legend-dot{width:9px;height:9px;border-radius:2px;background:var(--purple-bg);border:1px solid var(--purple);display:inline-block}
 .sk-x{font-size:10px}
 .cal-badge{font-size:10px}
+/* ── ARCHIVE ACCORDIONS ──────────────────────────────── */
+details.arch{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
+details.arch summary{cursor:pointer;padding:13px 1.25rem;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;list-style:none;user-select:none}
+details.arch summary::-webkit-details-marker{display:none}
+details.arch summary::before{content:'▸';color:var(--text3);font-size:11px;transition:transform .15s}
+details.arch[open] summary::before{transform:rotate(90deg)}
+details.arch summary:hover{background:var(--surface2)}
+.arch-count{font-size:11px;font-weight:400;color:var(--text3);margin-left:auto}
+.arch-body{padding:4px 1.25rem 1.1rem}
+.sk-oneoff{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--surface2)}
+.sk-chip{font-size:11px;background:var(--surface2);border-radius:6px;padding:4px 9px;color:var(--text2)}
+.sk-chip strong{color:var(--text);font-family:var(--mono);font-weight:600}
 /* ── RESPONSIVE ──────────────────────────────────────── */
 @media (max-width:640px){
   .page{padding:16px 14px}
@@ -4456,24 +4468,44 @@ function buildProgressPage() {
     </div>`;
   }).join('');
 
+  const sa = lessons[n-1].stage_assessment || {};
+  const mastered = sa.mastered || [], needs = sa.needs_work || [], saSummary = sa.summary || '';
+  const multiTrends = skillTrends.filter(s=>s.vals.filter(v=>v!==null).length>1);
+  const oneOffs = skillTrends.filter(s=>s.vals.filter(v=>v!==null).length===1);
+
   let html = `
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem">
     <div>
       <h2 style="font-size:22px;font-weight:500;margin-bottom:4px">学习进展总览</h2>
-      <p style="font-size:13px;color:var(--text2)">基于第 1–${n} 课时间码量化数据 · 已记录 ${n} / ${total} 课次</p>
+      <p style="font-size:13px;color:var(--text2)">已记录 ${n} 课 · 最近 L${lessons[n-1].lesson} ${lessons[n-1].date} · 上课日期见「课次日历」</p>
     </div>
     <button class="capture-btn" onclick="captureCurrentPage(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg> 保存截图</button>
   </div>
 
-  <div class="stitle">课次记录进度</div>
-  <div class="card" style="padding:1rem 1.25rem .9rem">
-    <div class="prog-dots">
-      ${Array(total).fill(0).map((_,i)=>`<div class="pd" style="background:${i<n?'var(--green)':'var(--surface2)'}"></div>`).join('')}
+  ${saSummary ? `
+  <div class="card" style="border-left:3px solid var(--green)">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span style="font-size:10px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.08em">阶段综合评估（跨${n}课）</span>
     </div>
-    <div style="font-size:12px;color:var(--text2);margin-top:7px">
-      已记录 <strong style="color:var(--text)">${n}</strong> 课 · 最近 L${lessons[n-1].lesson} ${lessons[n-1].date} · 完整列表见「课次日历」
-    </div>
-  </div>
+    <p style="font-size:13px;line-height:1.8;margin:0">${saSummary}</p>
+  </div>` : ''}
+
+  ${(mastered.length||needs.length) ? `
+  <div class="g2">
+    ${mastered.length ? `<div class="card no-mb">
+      <div class="stitle" style="margin-bottom:10px">已稳定掌握</div>
+      <div style="display:flex;flex-direction:column;gap:7px;font-size:13px">
+        ${mastered.map(i=>`<div style="display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">✓</span><div><strong>${i.title}</strong><br><span style="font-size:12px;color:var(--text2)">${i.detail}</span></div></div>`).join('')}
+      </div>
+    </div>` : ''}
+    ${needs.length ? `<div class="card no-mb">
+      <div class="stitle" style="margin-bottom:10px">持续待加强</div>
+      <div style="display:flex;flex-direction:column;gap:7px;font-size:13px">
+        ${needs.map(i=>`<div style="display:flex;gap:8px"><span style="color:var(--amber);flex-shrink:0">△</span><div><strong>${i.title}</strong><br><span style="font-size:12px;color:var(--text2)">${i.detail}</span></div></div>`).join('')}
+      </div>
+    </div>` : ''}
+  </div>` : ''}
 
   <div class="stitle">核心指标 · 最新课（L${lessons[n-1].lesson}）</div>
   <div class="metrics">
@@ -4503,69 +4535,51 @@ function buildProgressPage() {
 
   <div class="stitle">技能掌握度趋势</div>
   <div class="card">
-    <div style="font-size:12px;color:var(--text2);margin-bottom:12px">每格一项技能：曲线 = 各课评估的掌握度（0–100），点 = 该课有练到。虚线为 75% 参考线（视为"稳定掌握"）。没练到的课次不打点，曲线跨过。</div>
-    <div class="sk-grid">${skillTrends.map(s=>skillSparkline(s)).join('')}</div>
-  </div>
-
-  <div class="stitle">词汇积累</div>
-  <div class="card">
-    <div style="display:flex;align-items:center;gap:18px;margin-bottom:14px;flex-wrap:wrap">
-      <span style="font-size:13px;color:var(--text2)">已累积 <strong style="font-size:16px;color:var(--text);font-weight:600">${totalWordCount}</strong> 个单词</span>
-      <span style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text3)"><span class="vocab-chip repeat" style="pointer-events:none">word</span> 绿色 = 跨课复现（${repeatCount} 词）</span>
-    </div>
-    <div class="vocab-section-grid">${vocabGroupsHtml}</div>
-  </div>
-
-  <div class="stitle">句型积累</div>
-  <div class="card">
-    <div style="font-size:12px;color:var(--text3);margin-bottom:14px">共 <strong style="color:var(--text)">${totalPatterns}</strong> 个句型 · 标签显示首次出现课次 · 同一句型多课出现则展示全部</div>
-    ${patternsHtml}
-  </div>
-
-  <div class="stitle">纠错分析</div>
-  <div class="g2">
-    <div class="card no-mb">
-      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">三课共 <strong style="color:var(--text)">${errTotal}</strong> 次纠错 · 按提示方式分类</div>
-      ${errBarsHtml}
-    </div>
-    <div class="card no-mb">
-      <div class="stitle" style="margin-bottom:8px;font-size:11px">提示方式说明</div>
-      <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
-        <div><strong>老师示范</strong> — 老师说出正确答案，Nova 跟读（最常见）</div>
-        <div><strong>多次示范</strong> — 首次示范后仍出错，需再次示范</div>
-        <div><strong>直接告知</strong> — 直接给出正确词形，不作示范</div>
-        <div><strong>概念解释</strong> — 解释语法/音韵规则后纠正</div>
-        <div><strong>二选一</strong> — 给出两个选项让 Nova 选择正确答案</div>
-        <div><strong>暗示提示</strong> — 给出线索引导 Nova 自行找到答案</div>
-      </div>
-    </div>
-  </div>
-
-  ${(()=>{
-    const sa = lessons[n-1].stage_assessment || {};
-    const mastered = sa.mastered || [];
-    const needs = sa.needs_work || [];
-    const summary = sa.summary || '';
-    if (!mastered.length && !needs.length && !summary) return '';
-    return `
-  <div class="g2">
-    ${mastered.length ? `<div class="card no-mb">
-      <div class="stitle" style="margin-bottom:10px">已稳定掌握（跨${n}课）</div>
-      <div style="display:flex;flex-direction:column;gap:7px;font-size:13px">
-        ${mastered.map(i=>`<div style="display:flex;gap:8px"><span style="color:var(--green);flex-shrink:0">✓</span><div><strong>${i.title}</strong><br><span style="font-size:12px;color:var(--text2)">${i.detail}</span></div></div>`).join('')}
-      </div>
-    </div>` : ''}
-    ${needs.length ? `<div class="card no-mb">
-      <div class="stitle" style="margin-bottom:10px">持续待加强（跨${n}课）</div>
-      <div style="display:flex;flex-direction:column;gap:7px;font-size:13px">
-        ${needs.map(i=>`<div style="display:flex;gap:8px"><span style="color:var(--amber);flex-shrink:0">△</span><div><strong>${i.title}</strong><br><span style="font-size:12px;color:var(--text2)">${i.detail}</span></div></div>`).join('')}
-      </div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px">曲线 = 各课评估的掌握度（0–100），虚线为 75%"稳定掌握"参考线。只展示追踪 ≥2 课的技能。</div>
+    <div class="sk-grid">${multiTrends.map(s=>skillSparkline(s)).join('')}</div>
+    ${oneOffs.length ? `<div class="sk-oneoff">
+      <span style="font-size:11px;color:var(--text3);align-self:center">仅评估一次：</span>
+      ${oneOffs.map(s=>{const p=s.vals.map((v,i)=>v!==null?{v,l:lessons[i].lesson}:null).filter(Boolean)[0];return `<span class="sk-chip">${s.name} <strong>${p.v}%</strong> · L${p.l}</span>`;}).join('')}
     </div>` : ''}
   </div>
 
-  ${summary ? `<div class="stitle">阶段综合评估</div>
-  <div class="card"><div class="summary-text">${summary}</div></div>` : ''}`;
-  })()}`;
+  <div class="stitle">学习档案（点击展开）</div>
+  <details class="arch">
+    <summary>词汇积累<span class="arch-count">${totalWordCount} 词 · ${repeatCount} 词跨课复现</span></summary>
+    <div class="arch-body">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:12px"><span class="vocab-chip repeat" style="pointer-events:none">word</span> 绿色 = 跨课复现</div>
+      <div class="vocab-section-grid">${vocabGroupsHtml}</div>
+    </div>
+  </details>
+  <details class="arch">
+    <summary>句型积累<span class="arch-count">${totalPatterns} 个句型</span></summary>
+    <div class="arch-body">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:14px">标签显示出现课次</div>
+      ${patternsHtml}
+    </div>
+  </details>
+  <details class="arch">
+    <summary>纠错分析<span class="arch-count">${n}课共 ${errTotal} 次 · 中位数 ${corrMed}s</span></summary>
+    <div class="arch-body">
+      <div class="g2" style="margin-bottom:0">
+        <div>
+          <div style="font-size:12px;color:var(--text3);margin-bottom:12px">按提示方式分类</div>
+          ${errBarsHtml}
+        </div>
+        <div>
+          <div class="stitle" style="margin-bottom:8px;font-size:11px">提示方式说明</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px">
+            <div><strong>老师示范</strong> — 老师说出正确答案，Nova 跟读（最常见）</div>
+            <div><strong>多次示范</strong> — 首次示范后仍出错，需再次示范</div>
+            <div><strong>直接告知</strong> — 直接给出正确词形，不作示范</div>
+            <div><strong>概念解释</strong> — 解释语法/音韵规则后纠正</div>
+            <div><strong>二选一</strong> — 给出两个选项让 Nova 选择正确答案</div>
+            <div><strong>暗示提示</strong> — 给出线索引导 Nova 自行找到答案</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>`;
   return html;
 }
 
